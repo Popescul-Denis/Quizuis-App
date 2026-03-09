@@ -1,0 +1,85 @@
+'use client'
+import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
+import { QuestionProps , QuestionType} from '@/types/type'
+
+type QuestionCreateProps = {
+  onDelete: () => void;
+  index: number;
+  change: (index : number, e : React.ChangeEvent<HTMLInputElement>[], type : QuestionType) => void;
+  questionData?: QuestionProps;
+  setCanSubmit: (canSubmit: boolean) => void;
+}
+
+const QuestionCreateText = ({onDelete, index, change, questionData , setCanSubmit}: QuestionCreateProps) => {
+
+  const [imageUrl, setImageUrl] = useState("");
+  const addedImage = imageUrl !== "";
+
+  const [inputElements, setInputElements] = useState<React.ChangeEvent<HTMLInputElement>[]>([]);
+
+  useEffect(() => {
+    const hasEmptyRequiredField = !questionData?.questionText || !questionData?.correctAnswer;
+    setCanSubmit(!hasEmptyRequiredField);
+  }, [questionData, setCanSubmit]);
+
+  return (
+    <div className='question_create-container border-b-2 border-gray-300 pb-4 mb-4 font-bold flex flex-col'>
+      <h2 className='question_index'>{index}.</h2>
+      <div className='label_input_container mt-2'>
+        <label className='question_create-label'>Intrebare:</label>
+        <input type="text" className='question_create-input' id='questionText' value={questionData?.questionText || ""} onChange={(e) => {
+          inputElements[0] = e;
+          setInputElements(inputElements);
+          change(index, inputElements, QuestionType.text);
+        }}/>
+      </div>
+      <div className='label_input_container'>
+        <label className='question_create-label'>Adauga imaginea suport intrebarii (* optional)</label>
+        {!addedImage && <input type="text" className='question_create-input' accept="image/*" id='questionImage' value={questionData?.imgUrl || ""} onChange={(e) => {
+          setImageUrl(e.target.value);
+          inputElements[1] = e;
+          setInputElements(inputElements);
+          change(index, inputElements, QuestionType.text);
+        }}/>}
+        {/*Preview Imagine */
+        addedImage && <div className='image_preview_container mt-2'>
+          <Image src={imageUrl || "/example-image.jpg"} width={200} height={150} alt="Example image" className='rounded-lg'/>
+          <button className="delete_image_button" onClick={() => {
+            setImageUrl("");
+            inputElements[1] = {} as React.ChangeEvent<HTMLInputElement>;
+            setInputElements(inputElements);
+            change(index, inputElements, QuestionType.text);
+          }}>X</button>
+        </div>
+        }
+      </div>
+      <div className='label_input_container'>
+        <label className='question_create-label'>Raspunsuri:</label>
+        <input type="text" className='question_create-input' id='correctAnswer' value={questionData?.correctAnswer || ""} onChange={(e) => {
+          inputElements[2] = e;
+          setInputElements(inputElements);
+          change(index, inputElements, QuestionType.text);
+        }} placeholder='Raspuns corect'/>
+      </div>
+      <div className='label_input_container mt-2 flex'>
+        <label className='question_create-label'>Feedback pentru raspuns corect:</label>
+        <input type="text" className='question_create-input' id='corectFeedback' value={questionData?.corectFeedback || ""} onChange={(e) => {
+          inputElements[3] = e;
+          setInputElements(inputElements);
+          change(index, inputElements, QuestionType.text);
+        }} placeholder='Feedback pentru raspuns corect'/>
+        <label className='question_create-label'>Feedback pentru raspuns gresit:</label>
+        <input type="text" className='question_create-input' id='gresitFeedback' value={questionData?.gresitFeedback || ""} onChange={(e) => {
+          inputElements[4] = e;
+          setInputElements(inputElements);
+          change(index, inputElements, QuestionType.text);
+        }} placeholder='Feedback pentru raspuns gresit'/>
+      </div>
+      <Image src="/trash-bin.png" width={30} height={30} alt="Delete image" className='border-2 border-gray-400 rounded-2xl mt-2 hover:opacity-80 cursor-pointer '
+      onClick={onDelete}></Image>
+    </div>
+  )
+}
+
+export default QuestionCreateText
