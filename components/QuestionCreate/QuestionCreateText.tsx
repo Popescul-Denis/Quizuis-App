@@ -36,23 +36,12 @@ const QuestionCreateText = ({onDelete, index, change, questionData , setCanSubmi
       </div>
       <div className='label_input_container'>
         <label className='question_create-label'>Adauga imaginea suport intrebarii (* optional)</label>
-        {!addedImage && <input type="text" className='question_create-input' accept="image/*" id='questionImage' value={questionData?.imgUrl || ""} onChange={(e) => {
+        {<input type="url" className='question_create-input' id='questionImage'placeholder='Adauga url-ul imaginii dorite' value={questionData?.imgUrl || ""} onChange={(e) => {
           setImageUrl(e.target.value);
           inputElements[1] = e;
           setInputElements(inputElements);
           change(index, inputElements, QuestionType.text);
         }}/>}
-        {/*Preview Imagine */
-        addedImage && <div className='image_preview_container mt-2'>
-          <Image src={imageUrl || "/example-image.jpg"} width={200} height={150} alt="Example image" className='rounded-lg'/>
-          <button className="delete_image_button" onClick={() => {
-            setImageUrl("");
-            inputElements[1] = {} as React.ChangeEvent<HTMLInputElement>;
-            setInputElements(inputElements);
-            change(index, inputElements, QuestionType.text);
-          }}>X</button>
-        </div>
-        }
       </div>
       <div className='label_input_container'>
         <label className='question_create-label'>Raspunsuri:</label>

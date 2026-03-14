@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { QuestionProps, QuestionType } from '@/types/type'
 
@@ -18,12 +18,17 @@ const QuestionCreateChoice = ({onDelete, index, change, questionData, setCanSubm
 
   const [inputElements, setInputElements] = useState<React.ChangeEvent<HTMLInputElement>[]>([]);
 
+  useEffect(() => {
+    const hasEmptyRequiredField = !questionData?.questionText || !questionData?.correctAnswer || questionData?.options?.length !== 4 || questionData.options.some(option => option.trim() === '');
+    setCanSubmit(!hasEmptyRequiredField);
+  }, [questionData, setCanSubmit]);
+
   return (
     <div className='question_create-container border-b-2 border-gray-300 pb-4 mb-4 font-bold flex flex-col'>
       <h2 className='question_index'>{index}.</h2>
       <div className='label_input_container mt-2'>
         <label className='question_create-label'>Intrebare:</label>
-        <input type="text" className='question_create-input' id='questionText' value={questionData?.questionText || ''} onChange={(e) => {
+        <input type="url" className='question_create-input' id='questionText' value={questionData?.questionText || ''} onChange={(e) => {
           inputElements[0] = e;
           setInputElements(inputElements);
           change(index, inputElements, QuestionType.choice);
@@ -31,24 +36,12 @@ const QuestionCreateChoice = ({onDelete, index, change, questionData, setCanSubm
       </div>
       <div className='label_input_container'>
         <label className='question_create-label'>Adauga imaginea suport intrebarii (* optional)</label>
-        {!addedImage && <input type="text" className='question_create-input' accept="image/*"
-        id='questionImage' value={questionData?.imgUrl || ''} onChange={(e) => {
+        {<input type="url" className='question_create-input' id='questionImage'placeholder='Adauga url-ul imaginii dorite' value={questionData?.imgUrl || ""} onChange={(e) => {
           setImageUrl(e.target.value);
           inputElements[1] = e;
           setInputElements(inputElements);
-          change(index, inputElements, QuestionType.choice);
+          change(index, inputElements, QuestionType.text);
         }}/>}
-        {/*Preview Imagine */
-        addedImage && <div className='image_preview_container mt-2'>
-          <Image src={imageUrl || "/example-image.jpg"} width={200} height={150} alt="Example image" className='rounded-lg'/>
-          <button className="delete_image_button" onClick={() => {
-            setImageUrl("")
-            inputElements[1] = {} as React.ChangeEvent<HTMLInputElement>;
-            setInputElements(inputElements);
-            change(index, inputElements, QuestionType.choice);
-          }}>X</button>
-        </div>
-        }
       </div>
       <div className='label_input_container'>
         <label className='question_create-label'>Raspunsuri:</label>

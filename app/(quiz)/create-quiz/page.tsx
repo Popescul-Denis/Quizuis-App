@@ -180,7 +180,20 @@ const CreateQuiz = (props: Props) => {
           })}
         </div>
         <button type="button" className="bg-blue-500 text-white p-2 rounded mt-20 cursor-pointer"
-        onClick={() => console.log(canSubmit)}>Creeaza Quiz</button>
+        onClick={() => {
+          // For now, just log the quiz data to the console. Later, this is where you would send the data to your backend to create the quiz.
+          //first verify that all required fields are filled, if not, alert the user to fill them
+          if(!canSubmit || quizTitle.trim() === "" || questions.length === 0 || questionsPreview.some(q => !q.questionText || !q.correctAnswer || (q.type === QuestionType.choice && (!q.options || q.options.length !== 4 || q.options.some((option: string) => option.trim() === ''))))){
+            alert("Te rugam sa completezi toate campurile obligatorii pentru fiecare intrebare inainte de a crea quiz-ul.");
+            return;
+          }
+          const quizData = {
+            title: quizTitle,
+            difficulty: quizDifficulty,
+            questions: questionsPreview,
+          }
+          console.log("Quiz Data:", quizData);
+        }}>Creeaza Quiz</button>
       </form>
 
       <div className='preview_quiz'>

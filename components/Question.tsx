@@ -1,6 +1,7 @@
 'use client';
 import {useRef, useState, useEffect} from 'react'
 import { QuestionType, QuestionProps } from '@/types/type';
+import Image from '@node_modules/next/image';
 
 
 const Question: React.FC<QuestionProps> = (
@@ -71,11 +72,19 @@ const Question: React.FC<QuestionProps> = (
     return null;
   }
 
+  const isUrlValid = (urlString: string) => {
+    try {
+      new URL(urlString);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 
   return(
     <div className="question_container">
       <p className="enunt_question">{questionText}</p>
-      {imgUrl && <img src={imgUrl} alt="question image" className="imagine_question" width={200} height={200}/>}
+      {imgUrl && isUrlValid(imgUrl) && <Image src={imgUrl} alt="question image" className="imagine_question" width={200} height={200}/>}
       <div className="variante">
         {setVariante()}
         <button className="check" onClick={verifica} disabled={verificat || !alegere}>
