@@ -1,6 +1,7 @@
 'use client';
 import {useRef, useState, useEffect} from 'react'
-import { QuestionType, QuestionProps } from '@/types/type';
+import { QuestionProps } from '@/types/type';
+import { QuestionType } from '@prisma/client';
 import Image from '@node_modules/next/image';
 
 
@@ -84,7 +85,7 @@ const Question: React.FC<QuestionProps> = (
   return(
     <div className="question_container">
       <p className="enunt_question">{questionText}</p>
-      {imgUrl && isUrlValid(imgUrl) && <Image src={imgUrl} alt="question image" className="imagine_question" width={200} height={200}/>}
+      {imgUrl && isUrlValid(imgUrl) && <Image src={imgUrl} alt="question image" className="imagine_question" width={160} height={160}/>}
       <div className="variante">
         {setVariante()}
         <button className="check" onClick={verifica} disabled={verificat || !alegere}>

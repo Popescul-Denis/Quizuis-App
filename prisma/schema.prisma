@@ -34,23 +34,28 @@ model User {
   sessions Session[] 
 }
 
+enum Difficulty {
+  Usor
+  Mediu
+  Dificil
+}
+
 model Quiz {
   id  String  @id @default(cuid())
   title String  @unique
-  difficulty String
+  difficulty Difficulty
   questions Question[]
   results QuizResult[]
 
   authorId  String
   author  User @relation(fields: [authorId], references: [id])
   quizCard QuizCard?
-  quizCardId String?
 }
 
 model QuizCard {
   id  String  @id @default(cuid())
   title String @unique
-  difficulty String
+  difficulty Difficulty
   //quizPath e acelasi cu titlul quiz-ului dar fara spatii si cu cratime in loc de spatii
   quizPath String  @unique
 
@@ -117,7 +122,7 @@ model QuizResult {
   userId    String
   quizId    String
   quizName  String
-  difficulty String
+  difficulty Difficulty
   score     Int
   totalQuestions Int
   percentage  Int

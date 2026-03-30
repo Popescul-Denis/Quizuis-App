@@ -3,11 +3,13 @@ import React, {useState, useEffect} from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter} from 'next/navigation'
 import Image from 'next/image'
-import { QuestionProps, QuizCardType , QuestionType} from '@/types/type'
+import { QuestionProps, QuizCardType } from '@/types/type'
+import { QuestionType } from '@prisma/client'
 import QuestionCreateChoice from '@components/QuestionCreate/QuestionCreateChoice'
 import QuestionCreateText from '@components/QuestionCreate/QuestionCreateText'
 import PreviewQuiz from '@components/PreviewQuiz/PreviewQuiz'
 import Question from '@components/Question'
+import { Difficulty } from '@prisma/client'
 
 type Props = {}
 
@@ -40,13 +42,13 @@ const CreateQuiz = (props: Props) => {
   const [showPopup, setShowPopup] = useState(false);
   const [questions, setQuestions] = useState<any[]>([]);
   const [quizTitle, setQuizTitle] = useState("");
-  const [quizDifficulty, setQuizDifficulty] = useState<"Usor" | "Mediu" | "Greu">("Usor");
+  const [quizDifficulty, setQuizDifficulty] = useState<Difficulty>(Difficulty.Usor);
   const [questionsPreview, setQuestionsPreview] = useState<QuestionProps[]>([]);
 
   const [canSubmit, setCanSubmit] = useState(false);
 
   const quizCard : QuizCardType = {
-    id: 1,
+    id: '1',
     title: quizTitle || "Quiz fara titlu",
     difficulty: quizDifficulty,
     hasUserSolved: false,
@@ -180,7 +182,7 @@ const CreateQuiz = (props: Props) => {
           })}
         </div>
         <button type="button" className="bg-blue-500 text-white p-2 rounded mt-20 cursor-pointer"
-        onClick={() => {
+        onClick={async () => {
           // For now, just log the quiz data to the console. Later, this is where you would send the data to your backend to create the quiz.
           //first verify that all required fields are filled, if not, alert the user to fill them
           if(!canSubmit || quizTitle.trim() === "" || questions.length === 0 || questionsPreview.some(q => !q.questionText || !q.correctAnswer || (q.type === QuestionType.choice && (!q.options || q.options.length !== 4 || q.options.some((option: string) => option.trim() === ''))))){
@@ -191,8 +193,23 @@ const CreateQuiz = (props: Props) => {
             title: quizTitle,
             difficulty: quizDifficulty,
             questions: questionsPreview,
+            authorId: session?.user?.id,
           }
           console.log("Quiz Data:", quizData);
+
+          try {
+            const res = await fetch('/api/quiz', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(quizData),
+            });
+            const data = await res.json();
+            console.log("Quiz created:", data);
+          } catch (error) {
+            console.error("Eroare la crearea quiz-ului:", error);
+          }
         }}>Creeaza Quiz</button>
       </form>
 

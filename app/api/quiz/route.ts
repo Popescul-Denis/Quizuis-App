@@ -66,7 +66,6 @@ export async function POST(req: NextRequest) {
       data: {
         title: quizName,
         difficulty,
-        questions,
         authorId,
       },
     });
@@ -75,7 +74,12 @@ export async function POST(req: NextRequest) {
 
     await db.question.createMany({
       data: questions.map((question: any) => ({
-        ...question,
+        questionText: question.questionText,
+        imgUrl: question.imgUrl,
+        options: question.options ? question.options.join(",") : null, // Salvează opțiunile ca string separat prin virgule
+        correctAnswer: question.correctAnswer,
+        corectFeedback: question.corectFeedback ? question.corectFeedback : null,
+        gresitFeedback: question.gresitFeedback ? question.gresitFeedback : null,
         quizId: newQuiz.id,
       })),
     });

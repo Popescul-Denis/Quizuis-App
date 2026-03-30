@@ -1,7 +1,8 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { QuestionProps , QuestionType} from '@/types/type'
+import { QuestionProps } from '@/types/type'
+import { QuestionType } from '@prisma/client';
 
 type QuestionCreateProps = {
   onDelete: () => void;
@@ -51,7 +52,7 @@ const QuestionCreateText = ({onDelete, index, change, questionData , setCanSubmi
           change(index, inputElements, QuestionType.text);
         }} placeholder='Raspuns corect'/>
       </div>
-      <div className='label_input_container mt-2 flex'>
+      <div className='label_input_container mt-4'>
         <label className='question_create-label'>Feedback pentru raspuns corect:</label>
         <input type="text" className='question_create-input' id='corectFeedback' value={questionData?.corectFeedback || ""} onChange={(e) => {
           inputElements[3] = e;

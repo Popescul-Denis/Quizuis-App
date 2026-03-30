@@ -1,12 +1,10 @@
-export enum QuestionType {
-  choice = "choice",
-  text = "text",
-}
+import {Difficulty, QuestionType} from "@prisma/client";
+
 
 export type QuizCardType = {
-  id: number;
+  id: string;
   title: string;
-  difficulty: 'Usor' | 'Mediu' | 'Greu';
+  difficulty: Difficulty;
   hasUserSolved: boolean;
   quizPagePath: string;
 }
