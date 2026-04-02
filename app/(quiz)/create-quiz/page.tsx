@@ -91,19 +91,6 @@ const CreateQuiz = (props: Props) => {
       }
   }, [showPopup, questions])
 
-  //if i press K console.log(questions) and console.log(questionsPreview) to see the difference between them and how i can use them to create the quiz
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'k') {
-        console.log("Questions:", questions);
-        console.log("Questions Preview:", questionsPreview);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-  }, [questions, questionsPreview]);
-
   const addQuestion = (type: "multiple_choice" | "text" | "cancel") => {
     if(type === "cancel"){
       setShowPopup(false);
@@ -190,7 +177,7 @@ const CreateQuiz = (props: Props) => {
             return;
           }
           const quizData = {
-            title: quizTitle,
+            quizName: quizTitle,
             difficulty: quizDifficulty,
             questions: questionsPreview,
             authorId: session?.user?.id,
@@ -205,6 +192,17 @@ const CreateQuiz = (props: Props) => {
               },
               body: JSON.stringify(quizData),
             });
+
+            //alertam si utilizatorul daca exista deja un quiz cu acelasi nume
+            if(res.status === 409){
+              alert("Exista deja un quiz cu acest nume. Te rugam sa alegi un alt nume pentru quiz.");
+              return;
+            }
+            else if (res.status !== 200) {
+              alert("A aparut o eroare la crearea quiz-ului. Te rugam sa incerci din nou.");
+              return;
+            }
+            
             const data = await res.json();
             console.log("Quiz created:", data);
           } catch (error) {

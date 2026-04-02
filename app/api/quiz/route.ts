@@ -72,20 +72,22 @@ export async function POST(req: NextRequest) {
 
     // Daca adaugam quiz-ul, adaugam in db si questions
 
-    await db.question.createMany({
+
+    const questionsData = await db.question.createMany({
       data: questions.map((question: any) => ({
         questionText: question.questionText,
-        imgUrl: question.imgUrl,
-        options: question.options ? question.options.join(",") : null, // Salvează opțiunile ca string separat prin virgule
-        correctAnswer: question.correctAnswer,
-        corectFeedback: question.corectFeedback ? question.corectFeedback : null,
-        gresitFeedback: question.gresitFeedback ? question.gresitFeedback : null,
+        questionImg: question.imgUrl !== "" ? question.imgUrl : null,
+        questionType: question.type,
+        options: question.options, // options este array de string-uri si Prisma il va salva ca JSON
+        answer: question.correctAnswer,
+        feedbackCorect: question.corectFeedback ? question.corectFeedback : null,
+        feedbackGresit: question.gresitFeedback ? question.gresitFeedback : null,
         quizId: newQuiz.id,
       })),
     });
 
     // Adaugam si quizCard in db
-    await db.quizCard.create({
+    const quizCard = await db.quizCard.create({
       data: {
         title: quizName,
         quizPath: quizName.toLowerCase().replace(/\s+/g, '-'),
@@ -95,7 +97,7 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    return NextResponse.json({ message: "Quiz salvat cu succes", quiz: newQuiz });
+    return NextResponse.json({ message: "Quiz salvat cu succes", quiz: newQuiz, questions: questionsData, quizCard });
   } catch (error) {
     console.error("Error saving quiz:", error);
     return NextResponse.json(

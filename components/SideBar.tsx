@@ -35,6 +35,9 @@ const SideBar = (props: Props) => {
                 <Link href="/profile" className='sidebar_row'>
                   <Image src="/icons/account.png" alt='Profil' width={20} height={20}/> Profil
                 </Link>
+                <Link href="/create-quiz" className='sidebar_row'>
+                   Creeaza quiz
+                </Link>
                 <button className="sidebar_row"
                   onClick={() =>{ 
                     signOut();
