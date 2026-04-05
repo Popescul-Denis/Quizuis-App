@@ -32,7 +32,7 @@ const SideBar = (props: Props) => {
             </Link>
             {session?.user ? (
               <>
-                <Link href="/profile" className='sidebar_row'>
+                <Link href={`/profile/${session.user.username}`} className='sidebar_row'>
                   <Image src="/icons/account.png" alt='Profil' width={20} height={20}/> Profil
                 </Link>
                 <Link href="/create-quiz" className='sidebar_row'>

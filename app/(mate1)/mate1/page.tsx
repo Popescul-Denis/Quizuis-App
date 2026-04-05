@@ -4,7 +4,8 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Quiz from '@components/Quiz';
 import QuizPage from '@components/QuizPage';
-import { QuestionType, QuizCardType } from '@/types/type';
+import { QuestionType } from '@prisma/client';
+import { QuizCardType } from '@/types/type';
 
 const Mate1Page = () => {
   const { data: session, status } = useSession();
@@ -51,7 +52,7 @@ const Mate1Page = () => {
   ];
 
   const quizCard: QuizCardType = {
-    id: 1,
+    id: '1',
     title: 'Quiz de Matematică',
     difficulty: 'Mediu',
     hasUserSolved: false,

@@ -1,7 +1,8 @@
 'use client'
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useSession } from 'next-auth/react'
 import {useRouter } from 'next/navigation'
+import ProfilePage from '@components/Profile/ProfilePage';
 
 type Props = {}
 
@@ -10,20 +11,17 @@ const Profil = (props: Props) => {
   const {data: session, status} = useSession();
   const router = useRouter();
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    if(status !== 'authenticated' || !session?.user){
+    if(status === 'unauthenticated'){
       router.push('/log-in');
     }
-  }, [status, session , router])
-
-  if(status !== 'authenticated'){
-    return <p className='unauthenticated_text'>Nu esti autentificat</p>
-  }
+  }, [status, session , router]);
 
   return (
     <div>
-      <h1 className='text-white'>Profil Page</h1>
-      <p className='text-white'>{session?.user?.email}</p>
+      <ProfilePage userName={session?.user.username || ""}/>
     </div>
   )
 }
