@@ -1,23 +1,78 @@
 import React, {useState, useEffect} from 'react'
 import Quiz from './Quiz';
-import { QuestionType, QuestionProps, QuizType, QuizCardType } from '@/types/type';
+import { QuestionProps, QuizType, QuizCardType } from '@/types/type';
+import {QuestionType, Difficulty} from '@prisma/client';
 import {useSession} from 'next-auth/react';
 import {useRouter} from 'next/navigation';
 
 type Props = {
-  questions : QuestionProps[];
-  quizCard : QuizCardType;
+  questions : {
+    id: string,
+    questionText: string,
+    questionImg: string | null,
+    questionType: QuestionType,
+    answer: string,
+    options: string[] | null,
+    feedbackCorect: string,
+    feedbackGresit: string,
+  }[] | null | undefined;
+  quizCard : {quizPath: string, quiz: {
+      id: string, 
+      title: string, 
+      difficulty: Difficulty,
+      questions: {
+        id: string,
+        questionText: string,
+        questionImg: string | null,
+        questionType: QuestionType,
+        answer: string,
+        options: string[] | null,
+        feedbackCorect: string,
+        feedbackGresit: string,
+      }[] | null,
+    } } | null | undefined;
 }
 
 const QuizPage = ({ questions, quizCard }: Props) => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
+  const [questionsState, setQuestionsState] = useState<QuestionProps[] | null>(null);
+  const [quizCardState, setQuizCardState] = useState<QuizCardType | null>(null);
+
+  useEffect(() => {
+    if (quizCard) {
+      setQuizCardState({
+        id: quizCard.quiz.id,
+        title: quizCard.quiz.title,
+        difficulty: quizCard.quiz.difficulty,
+        hasUserSolved: false,
+        quizPagePath: quizCard.quizPath,
+      });
+    }
+  }, [quizCard]);
+
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.push('/log-in?redirect=/' + quizCard.quizPagePath);
+      router.push('/log-in?redirect=/' + quizCardState?.quizPagePath);
     }
   }, [status, router]);
+
+  useEffect(() => {
+    if (questions) {
+      const formattedQuestions = questions.map(q => ({
+        questionText: q.questionText,
+        type: q.questionType,
+        imgUrl: q.questionImg || undefined,
+        correctAnswer: q.answer,
+        options: q.options || undefined,
+        corectFeedback: q.feedbackCorect,
+        gresitFeedback: q.feedbackGresit,
+      }));
+      setQuestionsState(formattedQuestions);
+    }
+  }, [questions]);
+
 
   const handleQuizComplete = async (score: number, total: number) => {
     console.log(`Quiz completat: ${score}/${total}`);
@@ -59,14 +114,14 @@ const QuizPage = ({ questions, quizCard }: Props) => {
     <div className="min-h-screen py-8 px-4">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white"> Quiz - {quizCard.title}</h1>
-          <p className="text-gray-300 mt-2">{questions.length} întrebări • Fără limită de timp</p>
+          <h1 className="text-3xl font-bold text-white"> Quiz - {quizCardState?.title}</h1>
+          <p className="text-gray-300 mt-2">{questionsState?.length} întrebări • Fără limită de timp</p>
         </div>
       </div>
 
       <div className="max-w-3xl mx-auto">
         <Quiz 
-          questions={questions}
+          questions={questionsState ? questionsState : []}
           onQuizComplete={handleQuizComplete}
         />
       </div>

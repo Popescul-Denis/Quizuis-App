@@ -17,7 +17,7 @@ const Profil = (props: Props) => {
     if(status === 'unauthenticated'){
       router.push('/log-in');
     }
-  }, [status, session , router]);
+  }, [status , router]);
 
   return (
     <div>

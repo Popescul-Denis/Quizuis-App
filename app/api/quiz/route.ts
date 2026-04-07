@@ -90,7 +90,7 @@ export async function POST(req: NextRequest) {
     const quizCard = await db.quizCard.create({
       data: {
         title: quizName,
-        quizPath: quizName.toLowerCase().replace(/\s+/g, '-'),
+        quizPath: quizName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
         authorId: session.user.id,
         difficulty,
         quizId: newQuiz.id,

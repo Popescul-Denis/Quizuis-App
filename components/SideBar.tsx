@@ -14,6 +14,7 @@ const SideBar = (props: Props) => {
   const router = useRouter();
 
   const {data : session} = useSession();
+  
 
   return (
     <div>

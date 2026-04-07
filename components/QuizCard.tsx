@@ -39,22 +39,12 @@ const QuizCard = ({
   }, []);
   */
 
+
   const handleClick = async (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch(`/${quizPagePath}`, {
-        method: 'GET',
-      });
-      if (response.ok) {
-        router.push(`/${quizPagePath}`);
-      } else {
-        console.error('Eroare la navigare');
-      }
-    }
-    catch (error) {
-      console.error('Eroare la fetch:', error);
-    }
+    // Navigate directly to the quiz page
+    router.push(`/open-quiz/${quizPagePath}`);
   };
 
   return (
