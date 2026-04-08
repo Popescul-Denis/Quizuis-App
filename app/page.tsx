@@ -1,6 +1,8 @@
 'use client';
 import React from "react";
 import {useRouter} from "next/navigation";
+import { QuizCardType, QuestionProps } from "@/types/type";
+import {Difficulty, QuestionType} from "@prisma/client";
 import QuizCard from "@components/QuizCard";
 import QuizCardList from "@components/QuizCardList";
 
@@ -10,49 +12,39 @@ const Home = () => {
 
   const mockQuizzes = [
     {
-      id: 1,
+      id: '1',
       title: 'Matematică - Baza',
-      description: 'Testează-ți cunoștințele de bază în matematică cu întrebări de aritmetică și geometrie.',
-      difficulty: 'Usor' as const,
-      quizCount: 10,
-      hasUserSolved: true,
-      quizPagePath: 'mate1',
+      difficulty: Difficulty.Usor,
+      hasUserSolved: false,
+      quizPath: 'mate1',
     },
     {
-      id: 2,
+      id: '2',
       title: 'Istorie România',
-      description: 'Întrebări despre istoria României de la începuturi până în prezent.',
-      difficulty: 'Mediu' as const,
-      quizCount: 15,
+      difficulty: Difficulty.Mediu,
       hasUserSolved: false,
-      quizPagePath: 'istorie',
+      quizPath: 'istorie',
     },
     {
-      id: 3,
+      id: '3',
       title: 'Geografie Avansată',
-      description: 'Capitali, râuri, munți și alte informații geografice din întreaga lume.',
-      difficulty: 'Greu' as const,
-      quizCount: 20,
-      hasUserSolved: true,
-      quizPagePath: 'geografie',
-    },
-    {
-      id: 4,
-      title: 'Biologie Ușoară',
-      description: 'Noțiuni de bază de biologie pentru începători.',
-      difficulty: 'Usor' as const,
-      quizCount: 8,
+      difficulty: Difficulty.Dificil,
       hasUserSolved: false,
-      quizPagePath: 'biologie',
+      quizPath: 'geografie',
     },
     {
-      id: 5,
+      id: '4',
+      title: 'Biologie Ușoară',
+      difficulty: Difficulty.Usor,
+      hasUserSolved: false,
+      quizPath: 'biologie',
+    },
+    {
+      id: '5',
       title: 'Chimie Organică',
-      description: 'Testează cunoștințele tale de chimie organică.',
-      difficulty: 'Greu' as const,
-      quizCount: 12,
-      hasUserSolved: true,
-      quizPagePath: 'chimie',
+      difficulty: Difficulty.Dificil,
+      hasUserSolved: false,
+      quizPath: 'chimie',
     },
   ];
 

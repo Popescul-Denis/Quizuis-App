@@ -25,7 +25,7 @@ const Quiz = ({questions, onQuizComplete} : QuizType) => {
     }
 
     const newUserAnswers = [...userAnswers];
-    newUserAnswers[currentQuestionIndex] = isCorrect ? questions[currentQuestionIndex].correctAnswer : 'wrong';
+    newUserAnswers[currentQuestionIndex] = isCorrect ? questions[currentQuestionIndex].answer : 'wrong';
     setUserAnswers(newUserAnswers);
 
     const newAnsweredQuestions = [...answeredQuestions];

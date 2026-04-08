@@ -6,17 +6,20 @@ export type QuizCardType = {
   title: string;
   difficulty: Difficulty;
   hasUserSolved: boolean;
-  quizPagePath: string;
+  quizPath: string;
+  authorId?: string;
+  quizCount? : number;
+  description? : string;
 }
 
 export type QuestionProps = {
   questionText: string;
-  type: QuestionType;
-  imgUrl?: string;
-  correctAnswer : string | number;
+  questionType: QuestionType;
+  questionImg?: string;
+  answer : string;
   options?: string[];
-  corectFeedback?: string;
-  gresitFeedback?: string;
+  feedbackCorect?: string;
+  feedbackGresit?: string;
   onAnswerSubmit?: (isCorrect: boolean) => void;
   userAnswered?: boolean | null;
 }

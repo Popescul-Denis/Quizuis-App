@@ -6,7 +6,7 @@ import Image from '@node_modules/next/image';
 
 
 const Question: React.FC<QuestionProps> = (
-  {questionText, imgUrl, type, correctAnswer, options, corectFeedback, gresitFeedback, onAnswerSubmit, userAnswered = null, }
+  {questionText, questionImg, questionType, answer, options, feedbackCorect, feedbackGresit, onAnswerSubmit, userAnswered = null, }
 ) => {
 
   const [alegere, setAlegere] = useState<string | number>('');
@@ -20,12 +20,12 @@ const Question: React.FC<QuestionProps> = (
   const verifica = () => {
     if(!alegere || verificat) return;
 
-    //correctAnswer poate fi cu litere mari sau mici, dar la verificare se va ignora acest aspect, deci convertim totul la litere mici pentru comparatie
+    //answer poate fi cu litere mari sau mici, dar la verificare se va ignora acest aspect, deci convertim totul la litere mici pentru comparatie
 
-    correctAnswer = typeof correctAnswer === 'string' ? correctAnswer.toLowerCase() : correctAnswer;
+    answer = typeof answer === 'string' ? answer.toLowerCase() : answer;
     const alegereComparare = typeof alegere === 'string' ? alegere.toLowerCase() : alegere;
 
-    const isCorrect = alegereComparare === correctAnswer;
+    const isCorrect = alegereComparare === answer;
     setVerificat(true);
 
     if (onAnswerSubmit) {
@@ -34,7 +34,7 @@ const Question: React.FC<QuestionProps> = (
   }
 
   const setVariante = () => {
-    if (type === QuestionType.choice && options) {
+    if (questionType === QuestionType.choice && options) {
       return (
         <div className='variante_check'>
           {options.map((option, index) => { 
@@ -44,8 +44,8 @@ const Question: React.FC<QuestionProps> = (
               if(alegere===option) name+=' selected';
             }
             else{
-              if(option===correctAnswer) name+=' complet';
-              else if(option===alegere && option!==correctAnswer) name+=' incomplet';
+              if(option===answer) name+=' complet';
+              else if(option===alegere && option!==answer) name+=' incomplet';
               else name+=' disabled';
             }
 
@@ -60,15 +60,15 @@ const Question: React.FC<QuestionProps> = (
         </div>
       );
     }
-    else if (type === QuestionType.text) {
+    else if (questionType === QuestionType.text) {
       return <input type="text" className="raspuns_input" placeholder="" required autoComplete='off'
-      value = {alegere as string} 
+      value={alegere as string} 
       onChange={(e)=> { 
         // Raspunsul poate fi si cu litere mari sau mici, dar la verificare se va ignora acest aspect, deci convertim totul la litere mici pentru comparatie
         e.target.value = e.target.value.toLowerCase();
         if(!verificat) setAlegere(e.target.value);
       }}
-      disabled= {verificat}/>;
+      disabled={verificat}/>;
     }
     return null;
   }
@@ -85,7 +85,7 @@ const Question: React.FC<QuestionProps> = (
   return(
     <div className="question_container">
       <p className="enunt_question">{questionText}</p>
-      {imgUrl && isUrlValid(imgUrl) && <Image src={imgUrl} alt="question image" className="imagine_question" width={160} height={160}/>}
+      {questionImg && isUrlValid(questionImg) && <Image src={questionImg} alt="question image" className="imagine_question" width={160} height={160}/>}
       <div className="variante">
         {setVariante()}
         <button className="check" onClick={verifica} disabled={verificat || !alegere}>
@@ -93,8 +93,8 @@ const Question: React.FC<QuestionProps> = (
         </button>
       </div>
       <div className="feedback_container">
-        {userAnswered===true && (<p className="feedback_bun">{'\u2713'}  Corect! {corectFeedback}</p>)}
-        {userAnswered===false && (<p className="feedback_rau">{'\u2717'}  Oops, incorect! {gresitFeedback}</p>)}
+        {userAnswered===true && (<p className="feedback_bun">{'\u2713'}  Corect! {feedbackCorect}</p>)}
+        {userAnswered===false && (<p className="feedback_rau">{'\u2717'}  Oops, incorect! {feedbackGresit}</p>)}
       </div>
     </div>
   )

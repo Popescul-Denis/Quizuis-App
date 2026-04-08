@@ -76,12 +76,12 @@ export async function POST(req: NextRequest) {
     const questionsData = await db.question.createMany({
       data: questions.map((question: any) => ({
         questionText: question.questionText,
-        questionImg: question.imgUrl !== "" ? question.imgUrl : null,
-        questionType: question.type,
+        questionImg: question.questionImg !== "" ? question.questionImg : null,
+        questionType: question.questionType,
         options: question.options, // options este array de string-uri si Prisma il va salva ca JSON
-        answer: question.correctAnswer,
-        feedbackCorect: question.corectFeedback ? question.corectFeedback : null,
-        feedbackGresit: question.gresitFeedback ? question.gresitFeedback : null,
+        answer: question.answer,
+        feedbackCorect: question.feedbackCorect ? question.feedbackCorect : null,
+        feedbackGresit: question.feedbackGresit ? question.feedbackGresit : null,
         quizId: newQuiz.id,
       })),
     });

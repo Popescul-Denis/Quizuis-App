@@ -20,34 +20,34 @@ const Mate1Page = () => {
   const quizQuestions = [
     {
       questionText: 'Care este rezultatul operației 15 + 27?',
-      type: QuestionType.choice,
-      correctAnswer: '42',
+      questionType: QuestionType.choice,
+      answer: '42',
       options: ['40', '41', '42', '43'],
-      corectFeedback: 'Corect! 15 + 27 = 42',
-      gresitFeedback: 'Rezultatul corect este 42.',
+      feedbackCorect: 'Corect! 15 + 27 = 42',
+      feedbackGresit: 'Rezultatul corect este 42.',
     },
     {
       questionText: 'Dacă un pătrat are latura de 5 cm, care este aria sa?',
-      type: QuestionType.choice,
-      correctAnswer: '25 cm²',
+      questionType: QuestionType.choice,
+      answer: '25 cm²',
       options: ['20 cm²', '25 cm²', '30 cm²', '35 cm²'],
-      corectFeedback: 'Excelent! Aria pătratului = latură × latură = 5 × 5 = 25 cm²',
-      gresitFeedback: 'Formula ariei pătratului este latură × latură.',
+      feedbackCorect: 'Excelent! Aria pătratului = latură × latură = 5 × 5 = 25 cm²',
+      feedbackGresit: 'Formula ariei pătratului este latură × latură.',
     },
     {
       questionText: 'Rezolvă ecuația: 3x - 7 = 14',
-      type: QuestionType.text,
-      correctAnswer: '7',
-      corectFeedback: 'Perfect! 3x = 14 + 7 = 21, deci x = 21 / 3 = 7',
-      gresitFeedback: 'Rezolvare: 3x = 14 + 7 = 21, deci x = 21 ÷ 3 = 7',
+      questionType: QuestionType.text,
+      answer: '7',
+      feedbackCorect: 'Perfect! 3x = 14 + 7 = 21, deci x = 21 / 3 = 7',
+      feedbackGresit: 'Rezolvare: 3x = 14 + 7 = 21, deci x = 21 ÷ 3 = 7',
     },
     {
       questionText: 'Care este perimetrul unui triunghi cu laturile de 6 cm, 8 cm și 10 cm?',
-      type: QuestionType.choice,
-      correctAnswer: '24 cm',
+      questionType: QuestionType.choice,
+      answer: '24 cm',
       options: ['20 cm', '22 cm', '24 cm', '26 cm'],
-      corectFeedback: 'Corect! Perimetrul = 6 + 8 + 10 = 24 cm',
-      gresitFeedback: 'Perimetrul este suma tuturor laturilor: 6 + 8 + 10.',
+      feedbackCorect: 'Corect! Perimetrul = 6 + 8 + 10 = 24 cm',
+      feedbackGresit: 'Perimetrul este suma tuturor laturilor: 6 + 8 + 10.',
     },
   ];
 
@@ -56,7 +56,7 @@ const Mate1Page = () => {
     title: 'Quiz de Matematică',
     difficulty: 'Mediu',
     hasUserSolved: false,
-    quizPagePath: 'mate1',
+    quizPath: 'mate1',
   };
 
   const handleQuizComplete = async (score: number, total: number) => {

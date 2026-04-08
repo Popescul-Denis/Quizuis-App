@@ -52,16 +52,16 @@ const CreateQuiz = (props: Props) => {
     title: quizTitle || "Quiz fara titlu",
     difficulty: quizDifficulty,
     hasUserSolved: false,
-    quizPagePath: '/',
+    quizPath: '/',
   };
 
   const handleChange = (index : number, e : React.ChangeEvent<HTMLInputElement>[], type : QuestionType) => {
     const adjustedIndex = index - 1; // Convert from 1-based (from UI) to 0-based (for array)
     questionsPreview[adjustedIndex] = {
       questionText: e[0]?.target.value,
-      imgUrl: e[1]?.target.value as string | '',
-      type: type,
-      correctAnswer: type === QuestionType.choice ? e[6]?.target.value : e[2]?.target.value,
+      questionImg: e[1]?.target.value as string | '',
+      questionType: type,
+      answer: type === QuestionType.choice ? e[6]?.target.value : e[2]?.target.value,
       ...(type === QuestionType.choice && {
         options: [
           e[2]?.target.value,
@@ -70,8 +70,8 @@ const CreateQuiz = (props: Props) => {
           e[5]?.target.value,
         ],
       }),
-      corectFeedback: e[type === QuestionType.choice ? 7 : 3]?.target.value,
-      gresitFeedback: e[type === QuestionType.choice ? 8 : 4]?.target.value,
+      feedbackCorect: e[type === QuestionType.choice ? 7 : 3]?.target.value,
+      feedbackGresit: e[type === QuestionType.choice ? 8 : 4]?.target.value,
     }
      setQuestionsPreview([...questionsPreview]);
   }
@@ -104,12 +104,12 @@ const CreateQuiz = (props: Props) => {
 
     const emptyQuestionPreview: QuestionProps = {
       questionText: "",
-      type: type === "multiple_choice" ? QuestionType.choice : QuestionType.text,
-      imgUrl: "",
-      correctAnswer: "",
+      questionType: type === "multiple_choice" ? QuestionType.choice : QuestionType.text,
+      questionImg: "",
+      answer: "",
       ...(type === "multiple_choice" && { options: ["", "", "", ""] }),
-      corectFeedback: "",
-      gresitFeedback: "",
+      feedbackCorect: "",
+      feedbackGresit: "",
     }
 
     setQuestions(prev => [...prev, newQuestion]);
@@ -172,7 +172,7 @@ const CreateQuiz = (props: Props) => {
         onClick={async () => {
           // For now, just log the quiz data to the console. Later, this is where you would send the data to your backend to create the quiz.
           //first verify that all required fields are filled, if not, alert the user to fill them
-          if(!canSubmit || quizTitle.trim() === "" || questions.length === 0 || questionsPreview.some(q => !q.questionText || !q.correctAnswer || (q.type === QuestionType.choice && (!q.options || q.options.length !== 4 || q.options.some((option: string) => option.trim() === ''))))){
+          if(!canSubmit || quizTitle.trim() === "" || questions.length === 0 || questionsPreview.some(q => !q.questionText || !q.answer || (q.questionType === QuestionType.choice && (!q.options || q.options.length !== 4 || q.options.some((option: string) => option.trim() === ''))))){
             alert("Te rugam sa completezi toate campurile obligatorii pentru fiecare intrebare inainte de a crea quiz-ul.");
             return;
           }

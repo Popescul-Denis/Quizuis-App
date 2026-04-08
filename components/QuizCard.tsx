@@ -7,7 +7,7 @@ const QuizCard = ({
   title,
   difficulty,
   hasUserSolved = false,
-  quizPagePath,
+  quizPath,
 }: QuizCardType) => {
 
   const [score, setScore] = useState<number | null>(null);
@@ -44,7 +44,7 @@ const QuizCard = ({
     e.preventDefault();
 
     // Navigate directly to the quiz page
-    router.push(`/open-quiz/${quizPagePath}`);
+    router.push(`/open-quiz/${quizPath}`);
   };
 
   return (

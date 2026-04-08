@@ -19,21 +19,7 @@ const OpenQuiz = (props: Props) => {
   console.log('page_path from params:', params.page_path);
   const pagePath = params.page_path as string;
 
-  const [quizData, setQuizData] = useState<{quizCard?: {quizPath: string, quiz: {
-    id: string, 
-    title: string, 
-    difficulty: Difficulty,
-    questions: {
-      id: string,
-      questionText: string,
-      questionImg: string | null,
-      questionType: QuestionType,
-      answer: string,
-      options: string[] | null,
-      feedbackCorect: string,
-      feedbackGresit: string,
-    }[] | null,
-  } }, error? : string} | null>(null);
+  const [quizData, setQuizData] = useState<{quizCard?: QuizCardType, questions?: QuestionProps[], error? : string} | null>(null);
 
   useEffect(() => {
     if(status === 'unauthenticated'){
@@ -88,7 +74,7 @@ const OpenQuiz = (props: Props) => {
 
   return (
     <div>
-      <QuizPage questions={quizData?.quizCard?.quiz.questions} quizCard={quizData?.quizCard}/>
+      <QuizPage questions={quizData?.questions} quizCard={quizData?.quizCard}/>
      </div>
   )
 }

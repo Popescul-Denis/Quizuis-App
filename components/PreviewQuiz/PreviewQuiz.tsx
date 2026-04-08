@@ -5,8 +5,8 @@ import QuizPage from '@components/QuizPage'
 
 type Props = {
   questionsSchemes? : [];
-  questions: QuestionProps[];
-  quizCard: QuizCardType;
+  questions: QuestionProps[] | null | undefined;
+  quizCard: QuizCardType | null | undefined;
 }
 
 const PreviewQuiz = ({questions, quizCard}: Props) => {

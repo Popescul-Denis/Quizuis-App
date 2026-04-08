@@ -20,7 +20,7 @@ const QuestionCreateText = ({onDelete, index, change, questionData , setCanSubmi
   const [inputElements, setInputElements] = useState<React.ChangeEvent<HTMLInputElement>[]>([]);
 
   useEffect(() => {
-    const hasEmptyRequiredField = !questionData?.questionText || !questionData?.correctAnswer;
+    const hasEmptyRequiredField = !questionData?.questionText || !questionData?.answer;
     setCanSubmit(!hasEmptyRequiredField);
   }, [questionData, setCanSubmit]);
 
@@ -37,7 +37,7 @@ const QuestionCreateText = ({onDelete, index, change, questionData , setCanSubmi
       </div>
       <div className='label_input_container'>
         <label className='question_create-label'>Adauga imaginea suport intrebarii (* optional)</label>
-        {<input type="url" className='question_create-input' id='questionImage'placeholder='Adauga url-ul imaginii dorite' value={questionData?.imgUrl || ""} onChange={(e) => {
+        {<input type="url" className='question_create-input' id='questionImage'placeholder='Adauga url-ul imaginii dorite' value={questionData?.questionImg || ""} onChange={(e) => {
           setImageUrl(e.target.value);
           inputElements[1] = e;
           setInputElements(inputElements);
@@ -46,7 +46,7 @@ const QuestionCreateText = ({onDelete, index, change, questionData , setCanSubmi
       </div>
       <div className='label_input_container'>
         <label className='question_create-label'>Raspunsuri:</label>
-        <input type="text" className='question_create-input' id='correctAnswer' value={questionData?.correctAnswer || ""} onChange={(e) => {
+        <input type="text" className='question_create-input' id='correctAnswer' value={questionData?.answer || ""} onChange={(e) => {
           inputElements[2] = e;
           setInputElements(inputElements);
           change(index, inputElements, QuestionType.text);
@@ -54,13 +54,13 @@ const QuestionCreateText = ({onDelete, index, change, questionData , setCanSubmi
       </div>
       <div className='label_input_container mt-4'>
         <label className='question_create-label'>Feedback pentru raspuns corect:</label>
-        <input type="text" className='question_create-input' id='corectFeedback' value={questionData?.corectFeedback || ""} onChange={(e) => {
+        <input type="text" className='question_create-input' id='corectFeedback' value={questionData?.feedbackCorect || ""} onChange={(e) => {
           inputElements[3] = e;
           setInputElements(inputElements);
           change(index, inputElements, QuestionType.text);
         }} placeholder='Feedback pentru raspuns corect'/>
         <label className='question_create-label'>Feedback pentru raspuns gresit:</label>
-        <input type="text" className='question_create-input' id='gresitFeedback' value={questionData?.gresitFeedback || ""} onChange={(e) => {
+        <input type="text" className='question_create-input' id='gresitFeedback' value={questionData?.feedbackGresit || ""} onChange={(e) => {
           inputElements[4] = e;
           setInputElements(inputElements);
           change(index, inputElements, QuestionType.text);

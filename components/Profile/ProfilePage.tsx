@@ -77,7 +77,7 @@ const ProfilePage = ({userName}: Props) => {
                     title={quiz.title}
                     difficulty={quiz.difficulty as any}
                     hasUserSolved={false}
-                    quizPagePath={quiz.quizCard?.quizPath || ''}
+                    quizPath={quiz.quizCard?.quizPath || ''}
                   />
                 ))}
               </div>

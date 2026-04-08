@@ -20,7 +20,7 @@ const QuestionCreateChoice = ({onDelete, index, change, questionData, setCanSubm
   const [inputElements, setInputElements] = useState<React.ChangeEvent<HTMLInputElement>[]>([]);
 
   useEffect(() => {
-    const hasEmptyRequiredField = !questionData?.questionText || !questionData?.correctAnswer || questionData?.options?.length !== 4 || questionData.options.some(option => option.trim() === '');
+    const hasEmptyRequiredField = !questionData?.questionText || !questionData?.answer || questionData?.options?.length !== 4 || questionData.options.some(option => option.trim() === '');
     setCanSubmit(!hasEmptyRequiredField);
   }, [questionData, setCanSubmit]);
 
@@ -37,7 +37,7 @@ const QuestionCreateChoice = ({onDelete, index, change, questionData, setCanSubm
       </div>
       <div className='label_input_container'>
         <label className='question_create-label'>Adauga imaginea suport intrebarii (* optional)</label>
-        {<input type="url" className='question_create-input' id='questionImage'placeholder='Adauga url-ul imaginii dorite' value={questionData?.imgUrl || ""} onChange={(e) => {
+        {<input type="url" className='question_create-input' id='questionImage'placeholder='Adauga url-ul imaginii dorite' value={questionData?.questionImg || ""} onChange={(e) => {
           setImageUrl(e.target.value);
           inputElements[1] = e;
           setInputElements(inputElements);
@@ -71,7 +71,7 @@ const QuestionCreateChoice = ({onDelete, index, change, questionData, setCanSubm
       </div>
       <div className="correct_answer_div gap-2 flex items-center">
         <label className='question_create-label'>Raspuns corect:</label>
-        <input type='text' className='question_create-input' placeholder='Raspuns corect' value={questionData?.correctAnswer || ''} onChange={(e) => {
+        <input type='text' className='question_create-input' placeholder='Raspuns corect' value={questionData?.answer || ''} onChange={(e) => {
           inputElements[6]=e;
           setInputElements(inputElements);
           change(index, inputElements, QuestionType.choice);
@@ -79,13 +79,13 @@ const QuestionCreateChoice = ({onDelete, index, change, questionData, setCanSubm
       </div>
       <div className='label_input_container mt-2 flex'>
         <label className='question_create-label'>Feedback pentru raspuns corect:</label>
-        <input type="text" className='question_create-input' value={questionData?.corectFeedback || ''} onChange={(e) => {
+        <input type="text" className='question_create-input' value={questionData?.feedbackCorect || ''} onChange={(e) => {
           inputElements[7] = e;
           setInputElements(inputElements);
           change(index, inputElements, QuestionType.choice);
         }}/>
         <label className='question_create-label'>Feedback pentru raspuns gresit:</label>
-        <input type="text" className='question_create-input' value={questionData?.gresitFeedback || ''} onChange={(e) => {
+        <input type="text" className='question_create-input' value={questionData?.feedbackGresit || ''} onChange={(e) => {
           inputElements[8] = e;
           setInputElements(inputElements);
           change(index, inputElements, QuestionType.choice);
