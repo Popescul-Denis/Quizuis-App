@@ -28,16 +28,16 @@ export async function GET(req : NextRequest, { params }: { params: Promise<{ use
               select: {
                 quizPath: true,
               }
+            },
+            questions: {
+              select: {
+                id: true,
+              }
             }
           }
         }
       }
     });
-
-    console.log('User found:', user ? 'YES' : 'NO');
-    if (user) {
-      console.log('User quizzes:', user.quizzes.map(q => ({ id: q.id, title: q.title, quizCard: q.quizCard })));
-    }
 
     if(!user){
       return NextResponse.json({error: "Utilizatorul nu a fost gasit"},{status: 404});

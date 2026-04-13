@@ -2,6 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { db } from "@/lib/prisma";
+import type { Difficulty } from '@prisma/client';
+
+const normalizeDifficulty = (value: unknown): Difficulty => {
+  const normalized = String(value).trim().toLowerCase();
+
+  if (normalized === 'usor' || normalized === 'easy') return 'Usor';
+  if (normalized === 'mediu' || normalized === 'medium') return 'Mediu';
+  if (normalized === 'dificil' || normalized === 'greu' || normalized === 'hard') return 'Dificil';
+
+  throw new Error('Dificultate invalidă');
+};
 
 export async function GET(req: NextRequest) {
   try{
@@ -47,7 +58,17 @@ export async function POST(req: NextRequest) {
     }
 
     // Preia datele din corpul cererii
-    const { quizName, difficulty, questions, authorId } = await req.json();
+    const { quizName, difficulty: difficultyRaw, questions } = await req.json();
+    let difficulty: Difficulty;
+
+    try {
+      difficulty = normalizeDifficulty(difficultyRaw);
+    } catch (error) {
+      return NextResponse.json(
+        { error: 'Dificultate invalidă' },
+        { status: 400 }
+      );
+    }
 
     // Daca exista deja un quiz cu acelasi nume, returneaza eroare
     const existingQuiz = await db.quiz.findFirst({
@@ -66,7 +87,7 @@ export async function POST(req: NextRequest) {
       data: {
         title: quizName,
         difficulty,
-        authorId,
+        authorId: session.user.id,
       },
     });
 

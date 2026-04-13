@@ -2,6 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { db } from "@/lib/prisma";
+import type { Difficulty } from '@prisma/client';
+
+const normalizeDifficulty = (value: unknown): Difficulty => {
+  const normalized = String(value).trim().toLowerCase();
+
+  if (normalized === 'usor' || normalized === 'easy') return 'Usor';
+  if (normalized === 'mediu' || normalized === 'medium') return 'Mediu';
+  if (normalized === 'dificil' || normalized === 'greu' || normalized === 'hard') return 'Dificil';
+
+  throw new Error('Dificultate invalidă');
+};
 
 export async function POST(req: NextRequest) {
   try {
@@ -16,7 +27,17 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { quizId, quizName, score, total, percentage, difficulty } = body;
+    const { quizId, quizName, score, total, percentage, difficulty: difficultyRaw } = body;
+
+    let difficulty: Difficulty;
+    try {
+      difficulty = normalizeDifficulty(difficultyRaw);
+    } catch (error) {
+      return NextResponse.json(
+        { error: 'Dificultate invalidă' },
+        { status: 400 }
+      );
+    }
 
     // Găsește user-ul
     const user = await db.user.findUnique({

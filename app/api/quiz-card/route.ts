@@ -17,12 +17,25 @@ export async function GET(req: NextRequest) {
 
     // returneaza quiz-cardurile din db dupa dificultate sau alte criterii
     const quizCards = await db.quizCard.findMany({
-      include: {
-        quiz: true,
-      },
+        select: {
+          id: true,
+          title: true,
+          difficulty: true,
+          quizPath: true,
+          authorId: true,
+          quiz: {
+            select: {
+              questions: {
+                select: {
+                  id: true,
+                }
+              }
+            }
+          }
+        }
     });
     return NextResponse.json({
-      quizCards,
+      quizCards
     });
   } catch (error) {
     console.error("Error fetching quiz cards:", error);

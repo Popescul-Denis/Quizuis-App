@@ -10,13 +10,10 @@ import {Difficulty, QuestionType} from '@prisma/client';
 type Props = {}
 
 const OpenQuiz = (props: Props) => {
-  console.log('OpenQuiz component rendered');
 
   const {data: session, status} = useSession();
   const router = useRouter();
   const params = useParams();
-  console.log('useParams() returned:', params);
-  console.log('page_path from params:', params.page_path);
   const pagePath = params.page_path as string;
 
   const [quizData, setQuizData] = useState<{quizCard?: QuizCardType, questions?: QuestionProps[], error? : string} | null>(null);
@@ -35,7 +32,6 @@ const OpenQuiz = (props: Props) => {
         return;
       }
       
-      console.log('Fetching quiz data for pagePath:', pagePath);
       try {
         const res = await fetch(`/api/quiz/${encodeURIComponent(pagePath)}`, {
           method: 'GET',
@@ -53,7 +49,6 @@ const OpenQuiz = (props: Props) => {
           return;
         }
         setQuizData(data);
-        console.log("Datele quiz-ului:", data);
       } catch (error) {
         console.error("Eroare la preluarea datelor quiz-ului:", error);
         setQuizData({ error: 'Eroare la încărcarea quiz-ului.' });

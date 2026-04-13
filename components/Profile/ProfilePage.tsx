@@ -12,7 +12,7 @@ const ProfilePage = ({userName}: Props) => {
 
   const { data: session , status } = useSession();
   const router = useRouter();
-  const [userData, setUserData] = useState<{user?: {id: string, email: string, username: string, quizzes: {id: string, title: string, difficulty: string, quizCard: {quizPath: string} | null}[]}, error?: string} | null>(null);
+  const [userData, setUserData] = useState<{user?: {id: string, email: string, username: string, quizzes: {id: string, title: string, difficulty: string, quizCard: {quizPath: string}, questions: {id: string}[] | null}[]}, error?: string} | null>(null);
 
   //gaseste userul dupa userName
 
@@ -21,7 +21,7 @@ const ProfilePage = ({userName}: Props) => {
 
     const fetchUser = async () => {
       try {
-        const res = await fetch(`/api/user/${encodeURIComponent(userName)}`, {
+        const res = await fetch(`/api/user/username/${encodeURIComponent(userName)}`, {
           method: 'GET',
         });
 
@@ -78,6 +78,8 @@ const ProfilePage = ({userName}: Props) => {
                     difficulty={quiz.difficulty as any}
                     hasUserSolved={false}
                     quizPath={quiz.quizCard?.quizPath || ''}
+                    authorId={userData.user?.id}
+                    quizCount={quiz.questions?.length || 0}
                   />
                 ))}
               </div>

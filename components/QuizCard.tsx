@@ -8,10 +8,13 @@ const QuizCard = ({
   difficulty,
   hasUserSolved = false,
   quizPath,
+  authorId,
+  quizCount,
 }: QuizCardType) => {
 
   const [score, setScore] = useState<number | null>(null);
   const router = useRouter();
+  const [authorName, setAuthorName] = useState<string | null>(null);
 
   /*useEffect(() => {
     const fetchUserScore = async () => {
@@ -39,6 +42,26 @@ const QuizCard = ({
   }, []);
   */
 
+  useEffect(() => {
+    const fetchUserNameById = async (id : string) => {
+      try{
+        const response = await fetch(`/api/user/id/${id}`, {
+          method: 'GET',
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setAuthorName(data.user.username);
+          // Do something with the user data, e.g., set it in state
+        }
+      } catch (error) {
+        console.error('Error fetching user name:', error);
+      }
+    }
+
+    if (authorId) {
+      fetchUserNameById(authorId);
+    }
+  }, [authorId])
 
   const handleClick = async (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -52,6 +75,9 @@ const QuizCard = ({
       <h2 className="nume" onClick={handleClick}>
         {title}
       </h2>
+      <div>
+        <p className="author">by {authorName ?? "N/A"} - {quizCount} întrebări</p>
+      </div>
       <div className="tag_score">
         <h4 className="tags">{difficulty}</h4>
         {hasUserSolved &&<p className="score_card">{score !== null ? `Scor: ${score}` : ""}</p>}

@@ -11,7 +11,6 @@ export async function GET(req : NextRequest, { params }: { params: Promise<{ qui
       return NextResponse.json({error: "Neautorizat"},{status: 401});
     }
     const { quiz_path } = await params;
-    console.log('Requested quiz_path:', quiz_path);
     if(!quiz_path){
       return NextResponse.json({error: "Quiz path lipsa"}, {status: 400});
     }

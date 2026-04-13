@@ -775,8 +775,8 @@ body {
 .nume {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: bold;
-  margin-bottom: 10px;
   cursor: pointer;
+  font-size: 2rem;
 }
 
 .ids {
@@ -1298,4 +1298,10 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 400px));
   gap: 20px;
+}
+
+.author {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: rgb(37, 36, 36);
+  font-size: .85rem;
 }

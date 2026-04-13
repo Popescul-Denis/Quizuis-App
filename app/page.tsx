@@ -1,5 +1,5 @@
 'use client';
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {useRouter} from "next/navigation";
 import { QuizCardType, QuestionProps } from "@/types/type";
 import {Difficulty, QuestionType} from "@prisma/client";
@@ -10,47 +10,33 @@ import QuizCardList from "@components/QuizCardList";
 
 const Home = () => {
 
-  const mockQuizzes = [
-    {
-      id: '1',
-      title: 'Matematică - Baza',
-      difficulty: Difficulty.Usor,
-      hasUserSolved: false,
-      quizPath: 'mate1',
-    },
-    {
-      id: '2',
-      title: 'Istorie România',
-      difficulty: Difficulty.Mediu,
-      hasUserSolved: false,
-      quizPath: 'istorie',
-    },
-    {
-      id: '3',
-      title: 'Geografie Avansată',
-      difficulty: Difficulty.Dificil,
-      hasUserSolved: false,
-      quizPath: 'geografie',
-    },
-    {
-      id: '4',
-      title: 'Biologie Ușoară',
-      difficulty: Difficulty.Usor,
-      hasUserSolved: false,
-      quizPath: 'biologie',
-    },
-    {
-      id: '5',
-      title: 'Chimie Organică',
-      difficulty: Difficulty.Dificil,
-      hasUserSolved: false,
-      quizPath: 'chimie',
-    },
-  ];
+  const [quizzes, setQuizzes] = useState<QuizCardType[]>([]);
+
+  useEffect(() => {
+    const fetchQuizCards = async () => {
+      try {
+        const response = await fetch('/api/quiz-card', {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setQuizzes(data.quizCards);
+        } else {
+          console.error('Failed to fetch quiz cards');
+        }
+      } catch (error) {
+        console.error('Error fetching quiz cards:', error);
+      }
+    };
+
+    fetchQuizCards();
+  }, []);
 
   return (
     <div className="min-h-screen">
-      <QuizCardList quizzes={mockQuizzes} />
+      <QuizCardList quizzes={quizzes} />
     </div>
   );
 }

@@ -9,7 +9,7 @@ import QuestionCreateChoice from '@components/QuestionCreate/QuestionCreateChoic
 import QuestionCreateText from '@components/QuestionCreate/QuestionCreateText'
 import PreviewQuiz from '@components/PreviewQuiz/PreviewQuiz'
 import Question from '@components/Question'
-import { Difficulty } from '@prisma/client'
+import type { Difficulty } from '@prisma/client'
 
 type Props = {}
 
@@ -42,8 +42,10 @@ const CreateQuiz = (props: Props) => {
   const [showPopup, setShowPopup] = useState(false);
   const [questions, setQuestions] = useState<any[]>([]);
   const [quizTitle, setQuizTitle] = useState("");
-  const [quizDifficulty, setQuizDifficulty] = useState<Difficulty>(Difficulty.Usor);
+  const [quizDifficulty, setQuizDifficulty] = useState<Difficulty>('Usor');
   const [questionsPreview, setQuestionsPreview] = useState<QuestionProps[]>([]);
+
+  const difficultyOptions: Difficulty[] = ['Usor', 'Mediu', 'Dificil'];
 
   const [canSubmit, setCanSubmit] = useState(false);
 
@@ -146,10 +148,10 @@ const CreateQuiz = (props: Props) => {
         <label className='create_quiz-label'>Titlu Quiz:</label>
         <input type="text" name="title" className="create_quiz-input_title" value={quizTitle} onChange={(e) => setQuizTitle(e.target.value)}/>
         <label className='create_quiz-label'>Dificultate:</label>
-        <select name="difficulty" className="create_quiz-select" value={quizDifficulty} onChange={(e) => setQuizDifficulty(e.target.value as any)}>
-          <option value="easy">Usor</option> 
-          <option value="medium">Mediu</option>
-          <option value="hard">Dificil</option>
+        <select name="difficulty" className="create_quiz-select" value={quizDifficulty} onChange={(e) => setQuizDifficulty(e.target.value as Difficulty)}>
+          {difficultyOptions.map((option) => (
+            <option key={option} value={option}>{option}</option>
+          ))}
         </select>
         <div className='flex w-full justify-between items-center mt-4'>
           <label className='create_quiz-label'>Intrebari: ( {questions.length} )</label>
@@ -180,7 +182,6 @@ const CreateQuiz = (props: Props) => {
             quizName: quizTitle,
             difficulty: quizDifficulty,
             questions: questionsPreview,
-            authorId: session?.user?.id,
           }
           console.log("Quiz Data:", quizData);
 
