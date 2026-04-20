@@ -9,6 +9,7 @@
 }
 
 html, body {
+  overflow: auto;
   overflow-x: hidden;
   width: 100%;
 }
@@ -148,7 +149,7 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 88vh;
+  height: 100%;
   border: 4px solid rgb(54, 23, 116);
   border-radius: 20px;
   padding: 16px;
@@ -298,6 +299,25 @@ body {
   border-radius: 8px;
   margin-top: 20px;
   align-self: center;
+}
+.imagine_question.enlarged {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  height: 70%;
+  z-index: 1000;
+}
+
+.image_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
 
 /* urmeaza stiling in special pentru scris-type intrebari*/
@@ -777,6 +797,10 @@ body {
   font-weight: bold;
   cursor: pointer;
   font-size: 2rem;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ids {

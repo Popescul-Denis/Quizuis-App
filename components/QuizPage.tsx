@@ -66,7 +66,7 @@ const QuizPage = ({ questions, quizCard }: Props) => {
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-3xl mx-auto h-200">
         <Quiz 
           questions={questions ? questions : []}
           onQuizComplete={handleQuizComplete}

@@ -82,10 +82,36 @@ const Question: React.FC<QuestionProps> = (
     }
   }
 
+  // when the image is clicked, it will be displayed in a larger view, and when clicked again, it will return to its original size. This is useful for users who want to see the details of the image more clearly.
+  const onImageClicked = (e: React.MouseEvent<HTMLImageElement>) => {
+    e.preventDefault();
+    const imgElement = e.currentTarget;
+    if (imgElement.classList.contains('enlarged')) {
+      imgElement.classList.remove('enlarged');
+      document.body.style.overflow = 'auto'; // permite scrolling-ul paginii atunci cand imaginea este redusa
+      // asiguram ca imaginea ramane vizibila in centrul ecranului atunci cand este redusa, daca a fost marita anterior
+      imgElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // scoate overlay-ul atunci cand imaginea este redusa, daca exista 
+      const overlay = document.querySelector('.image_overlay');
+      if (overlay) {
+        document.body.removeChild(overlay);
+      }
+    } else {
+      imgElement.classList.add('enlarged');
+      document.body.style.overflow = 'hidden'; // previne scrolling-ul paginii atunci cand imaginea este marita
+      //asiguram ca imaginea ramane vizibila in centrul ecranului atunci cand este marita
+      imgElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      //fa overlay pentru a evidentia imaginea atunci cand este marita, si pentru a permite inchiderea acesteia atunci cand se da click pe overlay
+      const overlayElement = document.createElement('div');
+      overlayElement.classList.add('image_overlay');
+      document.body.appendChild(overlayElement);
+    }
+  }
+
   return(
     <div className="question_container">
       <p className="enunt_question">{questionText}</p>
-      {questionImg && isUrlValid(questionImg) && <Image src={questionImg} alt="question image" className="imagine_question" width={160} height={160}/>}
+      {questionImg && isUrlValid(questionImg) && <Image src={questionImg} alt="question image" className="imagine_question" width={160} height={160} onClick={onImageClicked}/>}
       <div className="variante">
         {setVariante()}
         <button className="check" onClick={verifica} disabled={verificat || !alegere}>
