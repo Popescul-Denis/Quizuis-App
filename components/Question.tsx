@@ -65,7 +65,6 @@ const Question: React.FC<QuestionProps> = (
       value={alegere as string} 
       onChange={(e)=> { 
         // Raspunsul poate fi si cu litere mari sau mici, dar la verificare se va ignora acest aspect, deci convertim totul la litere mici pentru comparatie
-        e.target.value = e.target.value.toLowerCase();
         if(!verificat) setAlegere(e.target.value);
       }}
       disabled={verificat}/>;

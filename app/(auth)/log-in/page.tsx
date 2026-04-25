@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, use } from 'react'
+import React, { useState, useEffect, use, ButtonHTMLAttributes } from 'react'
 import Image from 'next/image';
 import validator from 'validator';
 
@@ -29,7 +29,7 @@ const SignIn = (props: Props) => {
     }
   }, [status, session, router]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e : React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     if(!canSubmit) return;
@@ -50,11 +50,12 @@ const SignIn = (props: Props) => {
       setIsLoading(false);
     }
 
+
   }
 
   useEffect(() => {
-    setCanSubmit(isEmailValid);
-  }, [isEmailValid]);
+    setCanSubmit(isEmailValid && password.length > 0);
+  }, [isEmailValid, password]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

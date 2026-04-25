@@ -5,10 +5,6 @@ import { db } from "@/lib/prisma";
 
 export async function GET(req : NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try{
-    const session = await getServerSession(authOptions);
-    if(!session?.user?.email){
-      return NextResponse.json({error: "Neautorizat"},{status: 401});
-    }
 
     const { id } = await params;
     if(!id){

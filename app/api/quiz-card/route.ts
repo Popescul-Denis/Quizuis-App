@@ -6,14 +6,6 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 export async function GET(req: NextRequest) {
   try{
     // Verifică autentificarea
-    const session = await getServerSession(authOptions);
-    
-    if (!session?.user?.email) {
-      return NextResponse.json(
-        { error: "Neautorizat" },
-        { status: 401 }
-      );
-    }
 
     // returneaza quiz-cardurile din db dupa dificultate sau alte criterii
     const quizCards = await db.quizCard.findMany({

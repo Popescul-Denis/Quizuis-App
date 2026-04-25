@@ -298,6 +298,7 @@ body {
   border: 5px solid black;
   border-radius: 8px;
   margin-top: 20px;
+  margin-bottom: 20px;
   align-self: center;
 }
 .imagine_question.enlarged {
@@ -329,7 +330,7 @@ body {
   font-weight: bold;
   font-size: 20px;
   text-align: center;
-  height: 15px;
+  height: 25px;
   color: white;
 }
 .raspuns_input:focus{
