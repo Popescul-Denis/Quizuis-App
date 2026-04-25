@@ -1,0 +1,139 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = ".generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  // Connection URLs are no longer stored in the schema file (Prisma 7+).
+  // For migrations, put the connection URL in prisma.config.ts.
+  // For runtime, pass `adapter` or `accelerateUrl` to the PrismaClient constructor.
+}
+
+model User {
+  id            String     @id @default(cuid())
+  email         String     @unique
+  emailVerified DateTime?
+  name          String?
+  username      String?    @unique
+  password      String?
+  image         String?
+  profileImg    String?
+  quizzes       Quiz[]
+  quizCard      QuizCard[]
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  results  QuizResult[]
+  accounts Account[]
+  sessions Session[]
+}
+
+enum Difficulty {
+  Usor
+  Mediu
+  Dificil
+}
+
+model Quiz {
+  id         String       @id @default(cuid())
+  title      String       @unique
+  difficulty Difficulty
+  questions  Question[]
+  results    QuizResult[]
+
+  authorId String
+  author   User      @relation(fields: [authorId], references: [id])
+  quizCard QuizCard?
+}
+
+model QuizCard {
+  id         String     @id @default(cuid())
+  title      String     @unique
+  difficulty Difficulty
+  //quizPath e acelasi cu titlul quiz-ului dar fara spatii si cu cratime in loc de spatii
+  quizPath   String     @unique
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
+  quiz     Quiz   @relation(fields: [quizId], references: [id])
+  quizId   String @unique
+}
+
+enum QuestionType {
+  choice
+  text
+}
+
+model Question {
+  id             String       @id @default(cuid())
+  questionText   String
+  questionImg    String?
+  questionType   QuestionType
+  answer         String
+  options        String[]
+  feedbackCorect String?
+  feedbackGresit String?
+
+  quiz   Quiz   @relation(fields: [quizId], references: [id])
+  quizId String
+}
+
+model Account {
+  id                String @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  user              User   @relation(fields: [userId], references: [id])
+
+  refresh_token String?
+  access_token  String?
+  expires_at    Int?
+  token_type    String?
+  scope         String?
+  id_token      String?
+  session_state String?
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  expires      DateTime
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model QuizResult {
+  id             String     @id @default(cuid())
+  userId         String
+  quizId         String
+  quizName       String
+  difficulty     Difficulty
+  score          Int
+  totalQuestions Int
+  percentage     Int
+  createdAt      DateTime   @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  quiz Quiz @relation(fields: [quizId], references: [id])
+
+  @@index([userId])
+  @@index([createdAt])
+}
