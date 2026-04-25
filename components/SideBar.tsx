@@ -6,9 +6,8 @@ import {signOut} from 'next-auth/react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-type Props = {}
 
-const SideBar = (props: Props) => {
+const SideBar = () => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
