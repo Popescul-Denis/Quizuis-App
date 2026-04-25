@@ -1,5 +1,4 @@
-import {Difficulty, QuestionType} from "@prisma/client";
-
+import { Difficulty, QuestionType } from "@prisma/client";
 
 export type QuizCardType = {
   id: string;

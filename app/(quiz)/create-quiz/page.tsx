@@ -4,12 +4,11 @@ import { useSession } from 'next-auth/react'
 import { useRouter} from 'next/navigation'
 import Image from 'next/image'
 import { QuestionProps, QuizCardType } from '@/types/type'
-import { QuestionType } from '@prisma/client'
+import { Difficulty, QuestionType } from '@prisma/client'
 import QuestionCreateChoice from '@components/QuestionCreate/QuestionCreateChoice'
 import QuestionCreateText from '@components/QuestionCreate/QuestionCreateText'
 import PreviewQuiz from '@components/PreviewQuiz/PreviewQuiz'
 import Question from '@components/Question'
-import type { Difficulty } from '@prisma/client'
 
 type Props = {}
 
@@ -42,10 +41,14 @@ const CreateQuiz = (props: Props) => {
   const [showPopup, setShowPopup] = useState(false);
   const [questions, setQuestions] = useState<any[]>([]);
   const [quizTitle, setQuizTitle] = useState("");
-  const [quizDifficulty, setQuizDifficulty] = useState<Difficulty>('Usor');
+  const [quizDifficulty, setQuizDifficulty] = useState<Difficulty>('Usor' as Difficulty);
   const [questionsPreview, setQuestionsPreview] = useState<QuestionProps[]>([]);
 
-  const difficultyOptions: Difficulty[] = ['Usor', 'Mediu', 'Dificil'];
+  const difficultyOptions = [
+    { value: 'Usor' as Difficulty, label: 'Usor' },
+    { value: 'Mediu' as Difficulty, label: 'Mediu' },
+    { value: 'Dificil' as Difficulty, label: 'Dificil' },
+  ];
 
   const [canSubmit, setCanSubmit] = useState(false);
 
@@ -57,12 +60,14 @@ const CreateQuiz = (props: Props) => {
     quizPath: '/',
   };
 
-  const handleChange = (index : number, e : React.ChangeEvent<HTMLInputElement>[], type : QuestionType) => {
+  type QuestionTypeFromSource = QuestionType | import('@prisma/client').$Enums.QuestionType;
+
+  const handleChange = (index : number, e : React.ChangeEvent<HTMLInputElement>[], type : QuestionTypeFromSource) => {
     const adjustedIndex = index - 1; // Convert from 1-based (from UI) to 0-based (for array)
     questionsPreview[adjustedIndex] = {
       questionText: e[0]?.target.value,
       questionImg: e[1]?.target.value as string | '',
-      questionType: type,
+      questionType: type as QuestionType,
       answer: type === QuestionType.choice ? e[6]?.target.value : e[2]?.target.value,
       ...(type === QuestionType.choice && {
         options: [
@@ -150,7 +155,7 @@ const CreateQuiz = (props: Props) => {
         <label className='create_quiz-label'>Dificultate:</label>
         <select name="difficulty" className="create_quiz-select" value={quizDifficulty} onChange={(e) => setQuizDifficulty(e.target.value as Difficulty)}>
           {difficultyOptions.map((option) => (
-            <option key={option} value={option}>{option}</option>
+            <option key={option.value} value={option.value}>{option.label}</option>
           ))}
         </select>
         <div className='flex w-full justify-between items-center mt-4'>
