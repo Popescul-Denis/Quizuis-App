@@ -1,8 +1,7 @@
 'use client';
 import React, {useState, useEffect} from "react";
 import {useRouter} from "next/navigation";
-import { QuizCardType, QuestionProps } from "@/types/type";
-import {Difficulty, QuestionType} from "@prisma/client";
+import { QuizCardType, QuestionProps, Difficulty, QuestionType } from "@/types/type";
 import QuizCard from "@components/QuizCard";
 import QuizCardList from "@components/QuizCardList";
 

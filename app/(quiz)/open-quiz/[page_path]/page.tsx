@@ -4,8 +4,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter, useParams } from 'next/navigation'
 import Quiz from '@components/Quiz';
 import QuizPage from '@components/QuizPage';
-import { QuizCardType, QuestionProps } from '@/types/type';
-import {Difficulty, QuestionType} from '@prisma/client';
+import { QuizCardType, QuestionProps, Difficulty, QuestionType } from '@/types/type';
 
 type Props = {}
 

@@ -1,7 +1,6 @@
 'use client';
 import {useRef, useState, useEffect} from 'react'
-import { QuestionProps } from '@/types/type';
-import { QuestionType } from '@prisma/client';
+import { QuestionProps, QuestionType } from '@/types/type';
 import Image from '@node_modules/next/image';
 
 

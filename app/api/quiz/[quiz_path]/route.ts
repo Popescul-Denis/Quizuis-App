@@ -49,13 +49,13 @@ export async function GET(req : NextRequest, { params }: { params: Promise<{ qui
     });
 
     const quizData : {quizCard: QuizCardType | null, questions: QuestionProps[] | null} = {
-      quizCard: { ...quizCard, hasUserSolved: false },
+      quizCard: { ...quizCard, hasUserSolved: false } as QuizCardType,
       questions: questions.map(q => ({
         ...q,
         questionImg: q.questionImg ?? undefined,
         feedbackCorect: q.feedbackCorect ?? undefined,
         feedbackGresit: q.feedbackGresit ?? undefined,
-      })),
+      })) as QuestionProps[],
     };
 
     return NextResponse.json(quizData, {status: 200});

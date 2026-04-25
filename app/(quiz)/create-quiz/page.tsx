@@ -3,8 +3,7 @@ import React, {useState, useEffect} from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter} from 'next/navigation'
 import Image from 'next/image'
-import { QuestionProps, QuizCardType } from '@/types/type'
-import { Difficulty, QuestionType } from '@prisma/client'
+import { QuestionProps, QuizCardType, Difficulty, QuestionType } from '@/types/type'
 import QuestionCreateChoice from '@components/QuestionCreate/QuestionCreateChoice'
 import QuestionCreateText from '@components/QuestionCreate/QuestionCreateText'
 import PreviewQuiz from '@components/PreviewQuiz/PreviewQuiz'
@@ -60,9 +59,7 @@ const CreateQuiz = (props: Props) => {
     quizPath: '/',
   };
 
-  type QuestionTypeFromSource = QuestionType | import('@prisma/client').$Enums.QuestionType;
-
-  const handleChange = (index : number, e : React.ChangeEvent<HTMLInputElement>[], type : QuestionTypeFromSource) => {
+  const handleChange = (index : number, e : React.ChangeEvent<HTMLInputElement>[], type : QuestionType) => {
     const adjustedIndex = index - 1; // Convert from 1-based (from UI) to 0-based (for array)
     questionsPreview[adjustedIndex] = {
       questionText: e[0]?.target.value,

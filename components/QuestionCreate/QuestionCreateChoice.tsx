@@ -1,8 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { QuestionProps } from '@/types/type'
-import { QuestionType } from '@prisma/client';
+import { QuestionProps, QuestionType } from '@/types/type';
 
 type QuestionCreateProps = {
   onDelete: () => void;

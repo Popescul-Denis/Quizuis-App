@@ -1,4 +1,14 @@
-import { Difficulty, QuestionType } from "@prisma/client";
+// Enum-urile pentru client - trebuie să matcheze valorile din Prisma
+export enum Difficulty {
+  Usor = "Usor",
+  Mediu = "Mediu",
+  Dificil = "Dificil"
+}
+
+export enum QuestionType {
+  choice = "choice",
+  text = "text"
+}
 
 export type QuizCardType = {
   id: string;
