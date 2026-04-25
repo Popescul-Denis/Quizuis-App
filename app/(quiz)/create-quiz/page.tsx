@@ -9,8 +9,6 @@ import QuestionCreateText from '@components/QuestionCreate/QuestionCreateText'
 import PreviewQuiz from '@components/PreviewQuiz/PreviewQuiz'
 import Question from '@components/Question'
 
-type Props = {}
-
 type AddQuestionPopupProps = {
   onAddQuestion: (type: "multiple_choice" | "text" | "cancel") => void;
 }
@@ -31,14 +29,14 @@ const AddQuestionPopup = ({ onAddQuestion }: AddQuestionPopupProps) => {
   )
 }
 
-const CreateQuiz = (props: Props) => {
+const CreateQuiz = () => {
 
   const { data: session, status } = useSession();
   const router = useRouter();
 
   const [loading, setLoading] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
-  const [questions, setQuestions] = useState<any[]>([]);
+  const [questions, setQuestions] = useState<{type: "multiple_choice" | "text", id: string}[]>([]);
   const [quizTitle, setQuizTitle] = useState("");
   const [quizDifficulty, setQuizDifficulty] = useState<Difficulty>('Usor' as Difficulty);
   const [questionsPreview, setQuestionsPreview] = useState<QuestionProps[]>([]);
@@ -122,13 +120,13 @@ const CreateQuiz = (props: Props) => {
     
   }
 
-  const deleteQuestion = (questionId : any) => {
+  const deleteQuestion = (questionId : string) => {
     const index = questions.findIndex(q => q.id === questionId);
     setQuestions(questions.filter(q => q.id !== questionId));
     setQuestionsPreview(questionsPreview.filter((_, i) => i !== index));
   }
 
-  const indexQuestion = (questionId : any) => {
+  const indexQuestion = (questionId : string) => {
     const index = questions.findIndex(q => q.id === questionId);
     return index + 1;
   }

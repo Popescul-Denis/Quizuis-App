@@ -3,9 +3,7 @@ import React from 'react'
 import Navbar from './Navbar';
 import {usePathname} from 'next/navigation';
 
-type Props = {}
-
-const ClientNavWrapper = (props: Props) => {
+const ClientNavWrapper = () => {
 
   const path=usePathname();
 

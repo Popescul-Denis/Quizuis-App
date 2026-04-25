@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@app/api/auth/[...nextauth]/route";
 import { db } from "@/lib/prisma";
 
-export async function GET(req : NextRequest, { params }: { params: Promise<{ username: string }> }) {
+export async function GET(req : NextRequest, { params }: { params: { username: string } }) {
   try{
     const session = await getServerSession(authOptions);
     if(!session?.user?.email){
@@ -48,7 +48,8 @@ export async function GET(req : NextRequest, { params }: { params: Promise<{ use
       username: userName,
       quizzes: user.quizzes,
     }}, {status: 200});
-  } catch(error : any){
-    return NextResponse.json({error: error.message}, {status: 500});
+  } catch(error : unknown){
+    const message = error instanceof Error ? error.message : 'Eroare necunoscuta';
+    return NextResponse.json({error: message}, {status: 500});
   }
 }

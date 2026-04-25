@@ -7,16 +7,15 @@ import PasswordInput from '@components/inputs/PasswordInput';
 import EmailInput from '@components/inputs/EmailInput';
 
 import {signIn, useSession, getProviders} from 'next-auth/react';
+import type { ClientSafeProvider } from 'next-auth/react' // ← adaugă asta
 import {useRouter} from 'next/navigation'
 
-type Props = {}
-
-const SignIn = (props: Props) => {
+const SignIn = () => {
   const router = useRouter();
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [providers, setProviders] = useState<any>(null);
+  const [providers, setProviders] = useState<Record<string, ClientSafeProvider> | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
@@ -44,8 +43,9 @@ const SignIn = (props: Props) => {
         callbackUrl: '/api/auth/check-username',
       });
 
-    }catch(error : any){
-      setErrorMessage(error.message || 'Eroare la autentificare');
+    }catch(error : unknown){
+      const message = error instanceof Error ? error.message : 'Eroare necunoscuta';
+      setErrorMessage(message);
     }finally{
       setIsLoading(false);
     }

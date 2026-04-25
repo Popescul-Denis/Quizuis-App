@@ -7,9 +7,8 @@ import PasswordInput from '@components/inputs/PasswordInput';
 import EmailInput from '@components/inputs/EmailInput';
 
 import {signIn, signOut, useSession, getProviders} from 'next-auth/react'
+import type { ClientSafeProvider } from 'next-auth/react' // ← adaugă asta
 import {useRouter} from 'next/navigation'
-
-type Props = {}
 
 const PasswordStrengthIndicator = ({password} : {password: string}) => {
   const [strength, setStrength] = useState<number>(0);
@@ -45,7 +44,7 @@ const PasswordStrengthIndicator = ({password} : {password: string}) => {
   )
 } 
 
-const SignUP = (props: Props) => {
+const SignUP = () => {
   const router = useRouter();
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
   const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
@@ -53,7 +52,7 @@ const SignUP = (props: Props) => {
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [providers, setProviders] = useState<any>(null);
+  const [providers, setProviders] = useState<Record<string, ClientSafeProvider> | null>(null);
   const [successMessage, setSuccessMessage] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -100,8 +99,9 @@ const SignUP = (props: Props) => {
         callbackUrl: '/api/auth/check-username',
       });
 
-    }catch(error : any){
-      setErrorMessage(error.message || 'Eroare la crearea contului');
+    }catch(error : unknown){
+      const message = error instanceof Error ? error.message : 'Eroare necunoscuta';
+      setErrorMessage(message);
     }finally{
       setIsLoading(false);
     }

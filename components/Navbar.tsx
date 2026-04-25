@@ -1,9 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 
-interface NavbarProps {}
-
-const Navbar : React.FC<NavbarProps> = () => {
+const Navbar : React.FC = () => {
   return (
     <div className='nav_bar'>
       <div className="logo_title_auth">

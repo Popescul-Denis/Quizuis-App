@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { db } from "@/lib/prisma";
-import type { Difficulty } from '@prisma/client';
+import {Difficulty} from "@prisma/client";
+import {QuestionProps} from "@/types/type";
 
 const normalizeDifficulty = (value: unknown): Difficulty => {
   const normalized = String(value).trim().toLowerCase();
@@ -95,7 +96,7 @@ export async function POST(req: NextRequest) {
 
 
     const questionsData = await db.question.createMany({
-      data: questions.map((question: any) => ({
+      data: questions.map((question: QuestionProps) => ({
         questionText: question.questionText,
         questionImg: question.questionImg !== "" ? question.questionImg : null,
         questionType: question.questionType,

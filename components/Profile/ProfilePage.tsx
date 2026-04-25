@@ -3,6 +3,7 @@ import React, {useState, useEffect, use} from 'react'
 import { useSession } from 'next-auth/react'
 import {useRouter } from 'next/navigation'
 import QuizCard from '@components/QuizCard'
+import { Difficulty } from '@/types/type';
 
 type Props = {
   userName : string;
@@ -75,7 +76,7 @@ const ProfilePage = ({userName}: Props) => {
                     key={quiz.id}
                     id={quiz.id}
                     title={quiz.title}
-                    difficulty={quiz.difficulty as any}
+                    difficulty={quiz.difficulty as Difficulty}
                     hasUserSolved={false}
                     quizPath={quiz.quizCard?.quizPath || ''}
                     authorId={userData.user?.id}

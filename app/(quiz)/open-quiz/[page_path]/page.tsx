@@ -6,9 +6,7 @@ import Quiz from '@components/Quiz';
 import QuizPage from '@components/QuizPage';
 import { QuizCardType, QuestionProps, Difficulty, QuestionType } from '@/types/type';
 
-type Props = {}
-
-const OpenQuiz = (props: Props) => {
+const OpenQuiz = () => {
 
   const {data: session, status} = useSession();
   const router = useRouter();

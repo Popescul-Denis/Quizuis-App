@@ -7,9 +7,7 @@ import Link from 'next/link';
 import UsernameInput from '@components/inputs/UsernameInput';
 import { stat } from 'fs';
 
-type Props = {}
-
-const AddUsername = (props: Props) => {
+const AddUsername = () => {
 
   const [username, setUsername] = useState<string>('');
   const router = useRouter();
@@ -32,7 +30,7 @@ const AddUsername = (props: Props) => {
       }
       // Redirect la home dupa setarea username-ului
       router.push('/');
-    }catch(error : any){
+    }catch(error : unknown){
       console.error("Eroare la setarea username-ului:", error);
       setIsLoading(false);
     }

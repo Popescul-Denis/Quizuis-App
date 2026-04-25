@@ -4,9 +4,7 @@ import { useSession } from 'next-auth/react'
 import {useRouter } from 'next/navigation'
 import ProfilePage from '@components/Profile/ProfilePage';
 
-type Props = {}
-
-const Profil = (props: Props) => {
+const Profil = () => {
 
   const {data: session, status} = useSession();
   const router = useRouter();
