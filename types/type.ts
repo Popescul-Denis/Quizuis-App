@@ -1,9 +1,5 @@
 // Enum-urile pentru client - trebuie să matcheze valorile din Prisma
-export enum Difficulty {
-  Usor = "Usor",
-  Mediu = "Mediu",
-  Dificil = "Dificil"
-}
+export type Difficulty = 'Usor' | 'Mediu' | 'Dificil';
 
 export enum QuestionType {
   choice = "choice",
