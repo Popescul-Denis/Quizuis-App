@@ -48,9 +48,11 @@ export async function GET(req : NextRequest, { params }: { params: Promise<{ qui
       }
     });
 
+    type QuestionRow = typeof questions[number];
+
     const quizData : {quizCard: QuizCardType | null, questions: QuestionProps[] | null} = {
       quizCard: { ...quizCard, hasUserSolved: false } as QuizCardType,
-      questions: questions.map(q => ({
+      questions: questions.map((q: QuestionRow) => ({
         ...q,
         questionImg: q.questionImg ?? undefined,
         feedbackCorect: q.feedbackCorect ?? undefined,
