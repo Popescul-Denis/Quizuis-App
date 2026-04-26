@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@lib/auth";
+import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/prisma";
 import {Difficulty} from "@prisma/client";
 import {QuestionProps} from "@/types/type";
