@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/prisma";
-import type { Difficulty } from '@prisma/client';
+import  { Difficulty } from '@prisma/client';
 
 const normalizeDifficulty = (value: unknown): Difficulty => {
   const normalized = String(value).trim().toLowerCase();
