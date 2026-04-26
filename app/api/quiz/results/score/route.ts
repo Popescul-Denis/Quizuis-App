@@ -35,7 +35,9 @@ export async function GET(req: NextRequest) {
       );
     }
     // Returneaza scorul cel mai mare pentru quiz-ul specific
-    const highestScore = user.results.reduce((max, result) => {
+    const highestScore = user.results.reduce((max : number, result : {
+      score: number;
+    }) => {
       return result.score > max ? result.score : max;
     }, 0);
     return NextResponse.json(
