@@ -206,6 +206,7 @@ const CreateQuiz = () => {
             
             const data = await res.json();
             console.log("Quiz created:", data);
+            alert("Quiz creat cu succes!");
           } catch (error) {
             console.error("Eroare la crearea quiz-ului:", error);
           }

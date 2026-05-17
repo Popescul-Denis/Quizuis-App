@@ -1,5 +1,5 @@
 'use client';
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {useRouter} from "next/navigation";
 import { QuizCardType, QuestionProps, Difficulty, QuestionType } from "@/types/type";
 import QuizCard from "@components/QuizCard";
@@ -10,6 +10,8 @@ import QuizCardList from "@components/QuizCardList";
 const Home = () => {
 
   const [quizzes, setQuizzes] = useState<QuizCardType[]>([]);
+  const router = useRouter();
+  const quizListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchQuizCards = async () => {
@@ -33,9 +35,22 @@ const Home = () => {
     fetchQuizCards();
   }, []);
 
+  const scrollToQuizList = () => {
+    if (quizListRef.current) {
+      quizListRef.current.scrollIntoView({ behavior: 'smooth' , block: 'start' });
+    }
+  }
+
   return (
     <div className="min-h-screen">
-      <QuizCardList quizzes={quizzes} />
+      {/*  */}
+      <div className="welcome_section">
+        <h1 className="welcome_title text-4xl font-bold mb-4">Bine ai venit la Quizuis!</h1>
+        <p className="welcome_description text-lg text-gray-600"><span className="font-bold text-2xl text_span" onClick={() => {router.push('/create-quiz')}}>Creaază</span> și <span className="font-bold text-2xl text_span" onClick={scrollToQuizList}>joacă</span> quiz-uri interesante din toată lumea!</p>
+      </div>
+      <div ref={quizListRef}>
+        <QuizCardList quizzes={quizzes} />
+      </div>
     </div>
   );
 }

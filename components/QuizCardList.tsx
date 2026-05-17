@@ -70,7 +70,7 @@ const QuizCardList = ({quizzes}: Props) => {
                 className={`quiz_card_wrapper ${cardClass}`}
                 onClick={() => cardClass === 'active' ? null : setCurrentIndex(index)}
               >
-                <QuizCard {...quiz}/>
+                <QuizCard {...quiz} />
               </div>)
             })}
           </div>

@@ -15,6 +15,7 @@ export type QuizCardType = {
   authorId?: string;
   quizCount? : number;
   description? : string;
+  quizId?: string;
 }
 
 export type QuestionProps = {

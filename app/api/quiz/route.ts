@@ -127,3 +127,55 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: "Neautorizat" },
+        { status: 401 }
+      );
+    }
+
+    const { quizId } = await req.json();
+
+    // Verifică dacă quiz-ul există și aparține utilizatorului
+    const quiz = await db.quiz.findFirst({
+      where: {
+        id: quizId,
+        authorId: session.user.id,
+      },
+    });
+
+    if (!quiz) {
+      return NextResponse.json(
+        { error: "Quiz-ul nu a fost găsit" },
+        { status: 404 }
+      );
+    }
+
+    // Șterge quizCard-ul asociat
+    await db.quizCard.deleteMany({
+      where: { quizId },
+    });
+
+    // Șterge întrebările asociate quiz-ului
+    await db.question.deleteMany({
+      where: { quizId },
+    });
+
+    // Șterge quiz-ul din baza de date
+    await db.quiz.delete({
+      where: { id: quizId },
+    });
+
+    return NextResponse.json({ message: "Quiz-ul a fost șters cu succes" });
+  } catch (error) {
+    console.error("Error deleting quiz:", error);
+    return NextResponse.json(
+      { error: "Eroare la ștergerea quiz-ului" },
+      { status: 500 }
+    );
+  }
+}
