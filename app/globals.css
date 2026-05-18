@@ -1407,3 +1407,81 @@ body {
   text-decoration: underline;
   cursor: pointer;
 }
+
+.quizzes_section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 2xl;
+  margin: 40px auto;
+}
+
+.quizzes_section_title {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  align-self: center;
+}
+
+.search_section {
+  gap: 20px;
+}
+
+.how_to_start_section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 2xl;
+  margin: 40px auto;
+  align-items: center;
+}
+
+.how_to_start_title {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  align-self : center;
+}
+
+.step_1 {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 50%;
+}
+
+.step_1::after {
+  content: '';
+  width: 2px;
+  height: 40px;
+  background-color: white;
+  margin: 0 auto;
+}
+
+.step_2 {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 50%;
+  margin-left: 20px;
+}
+
+.step_3 {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 50%;
+}
+
+/* under step_3 we have an horizontal line*/
+.under_line {
+  content: '';
+  width: 70%;
+  height: 2px;
+  background-color: white;
+  margin-top: 10px;
+}

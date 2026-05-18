@@ -61,7 +61,7 @@ const ProfilePage = ({userName}: Props) => {
 
   return (
     <div className='profile_container'>
-      <p className='profile_header_text'>Profilul lui <span className='profile_username'>{userName}</span></p>
+      <p className='profile_header_text'>Profilul lui <span className='profile_username'>{decodeURI(userName)}</span></p>
       {/* Sectiunea cu quiz-urile utilizatorului sub forma de carduri*/}
       <div className='profile_quizzes_section'>
         <p className='profile_quizzes_header'>QUIZ-URI</p>

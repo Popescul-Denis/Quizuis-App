@@ -14,8 +14,11 @@ export async function GET(req : NextRequest, { params }: { params: Promise<{ use
     if(!userName){
       return NextResponse.json({error: "Username lipsa"}, {status: 400});
     }
+
+    // transforma username, in loc de %2520 sa fie spatiu
+    const decodedUserName = decodeURIComponent(userName);
     const user = await db.user.findUnique({
-      where: {username: userName},
+      where: {username: decodedUserName},
       select: {
         id: true,
         email: true,
@@ -45,7 +48,7 @@ export async function GET(req : NextRequest, { params }: { params: Promise<{ use
     return NextResponse.json({user: {
       id: user.id,
       email: user.email,
-      username: userName,
+      username: decodedUserName,
       quizzes: user.quizzes,
     }}, {status: 200});
   } catch(error : unknown){

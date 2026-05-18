@@ -172,7 +172,9 @@ const QuizCard = ({
         {title}
       </h2>
       <div>
-        <p className="author">by {authorName ?? "N/A"} - {quizCount} întrebări</p>
+        <p className="author">by <span className='cursor-pointer' onClick={() => {
+          router.push(`/profile/${authorName}`)
+        }}>{authorName ?? "N/A"}</span> - {quizCount} întrebări</p>
       </div>
       <div className="tag_score">
         <h4 className="tags">{difficulty}</h4>
