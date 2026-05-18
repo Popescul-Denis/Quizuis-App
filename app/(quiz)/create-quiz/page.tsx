@@ -8,6 +8,7 @@ import QuestionCreateChoice from '@components/QuestionCreate/QuestionCreateChoic
 import QuestionCreateText from '@components/QuestionCreate/QuestionCreateText'
 import PreviewQuiz from '@components/PreviewQuiz/PreviewQuiz'
 import Question from '@components/Question'
+import { generateUUID } from '@utils/idGenerator'
 
 type AddQuestionPopupProps = {
   onAddQuestion: (type: "multiple_choice" | "text" | "cancel") => void;
@@ -101,7 +102,7 @@ const CreateQuiz = () => {
 
     const newQuestion = {
       type: type,
-      id: crypto.randomUUID(),
+      id: generateUUID(),
     }
 
     const emptyQuestionPreview: QuestionProps = {

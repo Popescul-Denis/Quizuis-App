@@ -101,10 +101,9 @@ const Quiz = ({questions, onQuizComplete} : QuizType) => {
       <div className='progres_bar'>
         <div className='progres_filler' style={{width: `${((currentQuestionIndex+1) / questions.length) * 100}%`}}>
         </div>
-        <p className='progres_text'>{currentQuestionIndex+1} / {questions.length}</p>
       </div>
 
-      <div className='h-[50%]'>
+      <div className='h-[50%'>
         <Question 
           key={currentQuestionIndex}
           {...currentQuestion}
@@ -113,16 +112,17 @@ const Quiz = ({questions, onQuizComplete} : QuizType) => {
         />
       </div>
 
-      <div className='navigare_intrebari h-[20%]'>
+      <div className='navigare_intrebari'>
         <button className='anterior_button' onClick={handlePreviousQuestion} disabled={currentQuestionIndex === 0}>
-          {'\u2190'} Intrebarea Anterioara
+          {'\u2190'}
         </button>
-        <button className='sari_peste_button' onClick={handleNextQuestion} disabled={!canProceed}>
-          { currentQuestionIndex < questions.length -1 ? "\u2192 Intrebarea Urmatoare" : 'Finalizare Quiz' }
-        </button>
+        <p className='paragraf_indicator'>Intrebarea {currentQuestionIndex + 1}</p>
+        {currentQuestionIndex !== questions.length - 1 && <button className='sari_peste_button' onClick={handleNextQuestion} disabled={!canProceed}>
+          { currentQuestionIndex < questions.length -1 ? "\u2192" : '' }
+        </button>}
       </div>
 
-      <div className='indicatori_intrebari'>
+      {/*<div className='indicatori_intrebari'>
         {questions.map((_, index) => (
           <button
             key={index}
@@ -133,14 +133,14 @@ const Quiz = ({questions, onQuizComplete} : QuizType) => {
                 ? (userAnswers[index] != 'wrong' ? 'corect' : 'gresit') 
                 : 'necompletat'
             }`}
-            disabled={!answeredQuestions[index]}
+            disabled={!answeredQuestions[index] && !answeredQuestions[index-1]}
             onClick={() => setCurrentQuestionIndex(index)}
             title={`Întrebarea ${index + 1}`}
           >
             {index + 1}
           </button>
         ))}
-      </div>
+      </div>*/}
 
     </div>
   )

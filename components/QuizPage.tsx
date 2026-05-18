@@ -58,7 +58,7 @@ const QuizPage = ({ questions, quizCard }: Props) => {
   }
 
   return (
-    <div className="min-h-screen py-8 px-4">
+    <div className="min-h-screen py-8 px-4 ">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-white"> Quiz - {quizCard?.title}</h1>
@@ -66,14 +66,14 @@ const QuizPage = ({ questions, quizCard }: Props) => {
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto h-200">
+      <div className="max-w-3xl mx-auto h-200 quiz_wrapper">
         <Quiz 
           questions={questions ? questions : []}
           onQuizComplete={handleQuizComplete}
         />
       </div>
 
-      <div className="mt-8 text-center text-gray-300 text-sm">
+      <div className="mt-10 text-center text-gray-300 text-sm">
         <p>La final vei vedea scorul tău și procentajul de corectitudine.</p>
       </div>
     </div>

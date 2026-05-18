@@ -122,7 +122,7 @@ const QuizCard = ({
   };
 
   // when i press K, show quizData?.quizCard?.quizId in console
-  useEffect(() => {
+  /*useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
 
       if (e.key === 'k' || e.key === 'K') {
@@ -134,7 +134,7 @@ const QuizCard = ({
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     }
-  }, [quizData]);
+  }, [quizData]);*/
 
   const onConfirmDelete = async (e : React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

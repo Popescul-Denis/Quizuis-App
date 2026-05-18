@@ -9,7 +9,7 @@ import Image from 'next/image'
 
 const SideBar = () => {
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   const router = useRouter();
 
   const {data : session} = useSession();

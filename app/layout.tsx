@@ -8,6 +8,12 @@ import Provider from "@components/Provider";
 export const metadata: Metadata = {
   title: "Quizuis",
   description: "Raspunde la quiz-uri interesante pentru a-ti testa cunostintele!",
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    userScalable: true,
+    maximumScale: 1,
+  },
 };
 
 const  RootLayout = ({ children} : 
@@ -20,7 +26,7 @@ const  RootLayout = ({ children} :
           <ClientNavWrapper />
           <div className="main_and_sidebar">
             <main>{children}</main>
-            <SideBar/>
+            {/* <SideBar/> */}
           </div>
           <Footer />
         </Provider>
