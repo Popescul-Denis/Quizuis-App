@@ -1486,6 +1486,120 @@ body {
   margin-top: 10px;
 }
 
+/* Pentru pagina de users */
+.users_container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 2xl;
+  margin: 40px auto;
+  align-items: center;
+}
+
+.users_page_header {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  align-self : center;
+}
+
+.users_table_container {
+  width: 80%;
+  border: 2px solid rgb(107, 114, 128);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.user_link {
+  color: var(--primary-color);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.user_link:hover {
+  text-decoration: underline;
+}
+
+.user_link_text {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid rgb(237, 238, 242);
+}
+
+.search_bar_users {
+  width: 70%;
+  padding: 8px;
+  border: 2px solid rgb(107, 114, 128);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  background-color: white;
+}
+
+.search_input_users:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.users_count {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Pentru pagina de ajutor */
+.help_page_container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 2xl;
+  margin: 40px auto;
+  align-items: center;
+}
+
+.help_page_header {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+}
+
+.help_page_front {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.help_page_text {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+}
+
+.other_questions {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.help_page_question {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.help_page_answer {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  margin-bottom: 20px;
+}
+
 /* Pentru tablete */
 @media (max-width: 1024px) {
   .welcome_section {
@@ -1714,6 +1828,27 @@ body {
   }
 
   .raspuns_input {
+    font-size: 1rem;
+  }
+
+  /* Pentru pagina de help */
+  .help_page_container {
+    padding: 10px;
+  }
+  .help_page_header {
+    font-size: 1.5rem;
+  }
+  .help_page_front {
+    font-size: 1.2rem;
+  }
+
+  .other_questions {
+    font-size: 1rem;
+  }
+  .help_page_question {
+    font-size: 1rem;
+  }
+  .help_page_answer {
     font-size: 1rem;
   }
 }

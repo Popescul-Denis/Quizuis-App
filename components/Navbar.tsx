@@ -4,11 +4,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import {signOut} from 'next-auth/react'
+import {signOut, getSession} from 'next-auth/react'
 
 const MobileMenu = () => {
 
-  const {data : session} = useSession();
+  const {data : session, update} = useSession();
   return (
     <div className='mobile_menu'>
       <Link href="/" className='link_button'>
@@ -17,8 +17,14 @@ const MobileMenu = () => {
       <Link href={`/profile/${session?.user?.username}`} className='link_button'>
         Profil
       </Link>
+      <Link href="/users" className='link_button'>
+        Utilizatori
+      </Link>
       <Link href="/create-quiz" className='link_button'>
         Creeaza quiz
+      </Link>
+      <Link href="/help" className='link_button'>
+        Ajutor
       </Link>
       <button className='link_button' onClick={() => {
         signOut();
@@ -37,10 +43,13 @@ const Navbar : React.FC = () => {
 
   // when i press K on the keyboard, console.log(session.user?.username) if session exists
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
+    const handleKeyDown = async (event: KeyboardEvent) => {
       if (event.key === 'k' || event.key === 'K') {
         console.log(session);
         console.log(session?.user?.username);
+
+        const updatedSession = await getSession();
+        console.log("Session after update:", updatedSession);
       }
     };
 
@@ -66,8 +75,14 @@ const Navbar : React.FC = () => {
                 <Link href={`/profile/${session.user?.username}`} className='link_button'>
                   Profil
                 </Link>
+                <Link href="/users" className='link_button'>
+                  Utilizatori
+                </Link>
                 <Link href="/create-quiz" className='link_button'>
                   Creeaza quiz
+                </Link>
+                <Link href="/help" className='link_button'>
+                  Ajutor
                 </Link>
                 <button className='link_button' onClick={() => {
                   signOut();

@@ -5,8 +5,6 @@ import {useRouter} from 'next/navigation'
 import Link from 'next/link';
 
 import UsernameInput from '@components/inputs/UsernameInput';
-import { stat } from 'fs';
-import { get } from 'http';
 
 const AddUsername = () => {
 
@@ -29,9 +27,7 @@ const AddUsername = () => {
       if(!res.ok){
         throw new Error(data.error || 'Eroare la actualizarea username-ului');
       }
-      // Redirect la home dupa setarea username-ului
-      await update();
-      router.push('/');
+      window.location.href = '/api/auth/signout?callbackUrl=/log-in';
     }catch(error : unknown){
       console.error("Eroare la setarea username-ului:", error);
       setIsLoading(false);
