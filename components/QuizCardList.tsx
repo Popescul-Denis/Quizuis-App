@@ -75,6 +75,7 @@ const QuizCardList = ({quizzes}: Props) => {
             })}
           </div>
 
+
           <button 
             className="nav_arrow right_arrow"
             onClick={handleNext}

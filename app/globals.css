@@ -1658,7 +1658,6 @@ body {
     height: 20px;
   }
   .cards_display_container {
-    flex-direction: column;
     gap: 20px;
   }
   .quiz_card_wrapper {
@@ -1667,6 +1666,7 @@ body {
   }
   .quiz_card_container {
     width: 100%;
+    display : flex;
   }
 
   /* Pentru log-in si signup si iconita de la PasswordInput*/
