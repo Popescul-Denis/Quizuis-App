@@ -4,9 +4,7 @@ import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 
-type Props = {}
-
-const UsersPage = (props: Props) => {
+const UsersPage = () => {
 
   const {data: session, status} = useSession();
   const [users, setUsers] = useState<{ id: string; name: string; username: string; email: string }[]>([]);
