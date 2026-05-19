@@ -1,17 +1,18 @@
 'use client'
 import React, {useState, useEffect} from 'react'
-import {useSession, signIn, signOut} from 'next-auth/react'
+import {useSession, signIn, signOut, getSession} from 'next-auth/react'
 import {useRouter} from 'next/navigation'
 import Link from 'next/link';
 
 import UsernameInput from '@components/inputs/UsernameInput';
 import { stat } from 'fs';
+import { get } from 'http';
 
 const AddUsername = () => {
 
   const [username, setUsername] = useState<string>('');
   const router = useRouter();
-  const {data: session, status} = useSession();
+  const {data: session, status, update} = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSubmit = async () => {
@@ -29,6 +30,7 @@ const AddUsername = () => {
         throw new Error(data.error || 'Eroare la actualizarea username-ului');
       }
       // Redirect la home dupa setarea username-ului
+      await update();
       router.push('/');
     }catch(error : unknown){
       console.error("Eroare la setarea username-ului:", error);

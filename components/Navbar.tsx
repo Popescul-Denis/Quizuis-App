@@ -1,5 +1,5 @@
 'use client'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
@@ -35,6 +35,18 @@ const Navbar : React.FC = () => {
   const router = useRouter();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
+  // when i press K on the keyboard, console.log(session.user?.username) if session exists
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'k' || event.key === 'K') {
+        console.log(session);
+        console.log(session?.user?.username);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+  }, [session]);
+
   return (
     <div className='nav_bar'>
       <div className="logo_title_auth">
@@ -51,7 +63,7 @@ const Navbar : React.FC = () => {
                 <Link href="/" className='link_button'>
                   Acasa
                 </Link>
-                <Link href={`/profile/${session.user.username}`} className='link_button'>
+                <Link href={`/profile/${session.user?.username}`} className='link_button'>
                   Profil
                 </Link>
                 <Link href="/create-quiz" className='link_button'>
