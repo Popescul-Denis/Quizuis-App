@@ -7,7 +7,7 @@ import PasswordInput from '@components/inputs/PasswordInput';
 import EmailInput from '@components/inputs/EmailInput';
 
 import {signIn, useSession, getProviders} from 'next-auth/react';
-import type { ClientSafeProvider } from 'next-auth/react' // ← adaugă asta
+import type { ClientSafeProvider } from 'next-auth/react' 
 import {useRouter} from 'next/navigation'
 
 const SignIn = () => {
